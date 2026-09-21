@@ -21,13 +21,16 @@ in {
         light = "MoreWaita";
         dark = "MoreWaita";
       };
+
       cursor = {
         package = pkgs.bibata-cursors;
         name = "Bibata-Modern-Ice";
         size = 24;
       };
+
       targets.librewolf = {
         profileNames = ["default"];
+        themeExtension.enable = true;
         firefoxGnomeTheme.enable = true;
       };
     };

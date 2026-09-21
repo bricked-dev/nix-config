@@ -1045,11 +1045,11 @@
         "tinted-zed": "tinted-zed"
       },
       "locked": {
-        "lastModified": 1788275975,
-        "narHash": "sha256-SvegTWTlu78b2QHma4BJXcHQ0SdpcGFAfxRlyKKn9CM=",
+        "lastModified": 1790619312,
+        "narHash": "sha256-Me0yHC1q3vFnKJRgk29v70VTsCppQKiMwiKZSbFgJH8=",
         "owner": "bricked-dev",
         "repo": "stylix",
-        "rev": "bb70d6793eb4775841ed731db99eabab67d048a8",
+        "rev": "1ea7913be596e17c09d54458d1834167ca4fc5ad",
         "type": "github"
       },
       "original": {
