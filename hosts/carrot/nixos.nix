@@ -16,6 +16,7 @@ in {
 
   # System
   networking.hostName = "carrot";
+  time.timeZone = "Europe/Berlin";
 
   # Users
   users.users = {
@@ -33,35 +34,29 @@ in {
   };
 
   # Nix
-  system.stateVersion = "26.05";
+  environment.etc."nixos".source = self.outPath;
   nixpkgs.config.allowUnfree = true;
+  system.stateVersion = "26.05";
 
   nix = {
-    settings = {
-      experimental-features = ["nix-command" "flakes"];
-      trusted-users = ["@wheel"];
-    };
-
     gc = {
       automatic = true;
       dates = "daily";
       options = "--delete-older-than 30d";
     };
-  };
 
-  environment.etc."nixos".source = self.outPath;
+    settings = {
+      experimental-features = ["nix-command" "flakes"];
+      trusted-users = ["@wheel"];
+    };
+  };
 
   # Boot
   boot = {
-    loader.efi.canTouchEfiVariables = true;
     initrd.systemd.enable = true;
+    loader.efi.canTouchEfiVariables = true;
     plymouth.enable = true;
     silent = true;
-
-    lanzaboote = {
-      enable = true;
-      pkiBundle = "/var/lib/sbctl";
-    };
 
     kernelParams = [
       "zswap.enabled=1"
@@ -69,6 +64,11 @@ in {
       "zswap.max_pool_percent=25"
       "zswap.shrinker_enabled=1"
     ];
+
+    lanzaboote = {
+      enable = true;
+      pkiBundle = "/var/lib/sbctl";
+    };
   };
 
   # Networking
@@ -86,19 +86,25 @@ in {
 
   # Printing
   services.avahi.enable = true;
+
   services.printing = {
     enable = true;
-    drivers = [pkgs.hplipWithPlugin];
+    drivers = [pkgs.hplip];
   };
 
-  # Theming
-  stylix.enable = true;
-
-  # Locale
-  time.timeZone = "Europe/Berlin";
+  # Input
+  boot.kernelModules = ["uinput"];
+  hardware.opentabletdriver.enable = true;
+  hardware.uinput.enable = true;
   services.xserver.xkb.layout = "de";
 
+  i18n.inputMethod = {
+    enable = true;
+    type = "ibus";
+  };
+
   # Desktop
+  stylix.enable = true;
   services.displayManager.gdm.enable = true;
   programs.mango.enable = true;
 
@@ -120,12 +126,14 @@ in {
   programs.adwaita-demo.enable = true;
   programs.rust.enable = true;
   programs.spicetify.enable = true;
+  programs.steam.enable = true;
 
   environment.systemPackages = [
     agenixPkgs.agenix
     diskoPkgs.disko
     pkgs.alejandra
     pkgs.bacon
+    pkgs.bitwarden-desktop
     pkgs.cargo-flamegraph
     pkgs.fd
     pkgs.gcc
@@ -134,8 +142,13 @@ in {
     pkgs.nurl
     pkgs.proton-vpn
     pkgs.ripgrep
-    pkgs.sbctl # Secure boot
-    pkgs.tuba # Mastodon client
-    pkgs.vesktop # Discord client
+    pkgs.sbctl
+    pkgs.signal-desktop
+    pkgs.tuba
+    pkgs.typesetter
+    pkgs.typst
+    pkgs.vesktop
+    pkgs.whatsapp-electron
+    pkgs.krita
   ];
 }
