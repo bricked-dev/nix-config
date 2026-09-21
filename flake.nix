@@ -181,6 +181,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    firefox-extensions-declarative = {
+      url = "github:firefox-extensions-declarative/firefox-extensions-declarative";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-parts.follows = "flake-parts";
+      inputs.git-hooks.follows = "git-hooks";
+      inputs.treefmt-nix.follows = "treefmt-nix";
+    };
+
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
