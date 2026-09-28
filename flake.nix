@@ -2,45 +2,29 @@
   description = "NixOS configuration";
 
   outputs = inputs:
-    inputs.flake-parts.lib.mkFlake {inherit inputs;} ({
-      lib,
-      self,
-      ...
-    }: let
-      inherit (tree) paths evalAll modules;
-
+    inputs.flake-parts.lib.mkFlake {inherit inputs;} ({self, ...}: let
       systems = import inputs.systems;
-      tree = import ./lib/tree/default.nix {
-        inherit lib self inputs systems;
-      };
     in {
       imports = [
+        ./modules/forest/part.nix
         inputs.treefmt-nix.flakeModule
         inputs.git-hooks.flakeModule
       ];
 
       inherit systems;
 
-      flake = {
-        inherit (modules.generic) lib templates;
-        homeModules = modules.mixed.modules.home;
-        nixosModules = paths.mixed.modules.nixos;
+      forest = {
+        root = ./.;
+        args = {inherit inputs self;};
       };
 
-      perSystem = {
-        config,
-        options,
-        pkgs,
-        system,
-        ...
-      }: let
-        specialArgs.generic' = tree.specialArgs.generic // {inherit config options pkgs system;};
-        modules.generic' = evalAll.generic specialArgs.generic' paths.generic;
-      in {
-        inherit (modules.generic') checks apps packages legacyPackages devShells;
+      perSystem = {config, ...}: {
+        devShells.default = config.pre-commit.devShell;
 
         treefmt.config = {
+          flakeCheck = false;
           projectRootFile = "flake.nix";
+
           programs = {
             actionlint.enable = true;
             alejandra.enable = true;
@@ -48,7 +32,6 @@
             rustfmt.enable = true;
             statix.enable = true;
           };
-          flakeCheck = false;
         };
 
         pre-commit.settings = {
@@ -63,6 +46,7 @@
       "https://nix-community.cachix.org"
       "https://bricked.cachix.org"
     ];
+
     extra-trusted-public-keys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
