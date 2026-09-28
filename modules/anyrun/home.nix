@@ -7,9 +7,9 @@
 }: let
   inherit (builtins) readFile;
   inherit (lib) mkIf;
-  inherit (self.legacyPackages.${pkgs.stdenv.hostPlatform.system}) anyrunPlugins;
 
   cfg = config.programs.anyrun;
+  selfPkgs = self.packages.${pkgs.stdenv.hostPlatform.system};
 in {
   config = mkIf cfg.enable {
     programs.anyrun = {
@@ -17,7 +17,7 @@ in {
         closeOnClick = true;
 
         plugins = [
-          "${anyrunPlugins.power}/lib/libpower.so"
+          "${selfPkgs.anyrun-power-plugin}/lib/libpower.so"
           "${cfg.package}/lib/libapplications.so"
           "${cfg.package}/lib/librink.so"
           "${cfg.package}/lib/libsymbols.so"

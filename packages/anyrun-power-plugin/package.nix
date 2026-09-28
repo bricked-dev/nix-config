@@ -1,7 +1,16 @@
-{pkgs, ...}: let
-  inherit (pkgs) glib makeWrapper rustPlatform atk gtk3 gtk-layer-shell pkg-config librsvg cargo rustc;
-
-  cargoToml = builtins.fromTOML (builtins.readFile ./Cargo.toml);
+{
+  atk,
+  cargo,
+  glib,
+  gtk-layer-shell,
+  gtk3,
+  librsvg,
+  makeWrapper,
+  pkg-config,
+  rustPlatform,
+  rustc,
+}: let
+  cargoToml = fromTOML (builtins.readFile ./Cargo.toml);
   pname = cargoToml.package.name;
   inherit (cargoToml.package) version;
 in
@@ -12,6 +21,7 @@ in
 
     cargoLock = {
       lockFile = ./Cargo.lock;
+
       # Temporary while packages aren't yet stabilized
       allowBuiltinFetchGit = true;
     };
