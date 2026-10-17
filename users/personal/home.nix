@@ -52,5 +52,6 @@
   # Apps
   programs.ghostty.enable = true;
   programs.librewolf.enable = true;
+  programs.proton-vpn.enable = true;
   programs.rust.enable = true;
 }

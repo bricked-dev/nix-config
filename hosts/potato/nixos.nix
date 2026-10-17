@@ -133,7 +133,6 @@ in {
     pkgs.home-manager
     pkgs.nix-melt
     pkgs.nurl
-    pkgs.proton-vpn
     pkgs.ripgrep
     pkgs.tuba # Mastodon client
     pkgs.vesktop # Discord client

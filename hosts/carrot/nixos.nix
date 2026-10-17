@@ -141,7 +141,6 @@ in {
     pkgs.home-manager
     pkgs.nix-melt
     pkgs.nurl
-    pkgs.proton-vpn
     pkgs.ripgrep
     pkgs.sbctl
     pkgs.signal-desktop
