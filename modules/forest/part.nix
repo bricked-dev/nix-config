@@ -20,8 +20,6 @@
   resolveNestedUsers = resolveNested cfg.modules.usersRoot;
   resolveDefault' = resolveDefault cfg.root;
 
-  transformLib' = transformLib cfg.lib.args;
-  transformTemplate = transformLib cfg.template.args;
   transformModule' = transformModule cfg.modules.args;
 
   mkRootOption = name: default:
@@ -85,19 +83,19 @@ in {
     templates = {
       args = mkArgsOption "the templates";
       root = mkRootOption "the templates" "templates";
-      name = mkNameOption "the template" "template";
+      name = mkNameOption "the templates" "template";
     };
   };
 
   config = {
     forest = {
       lib = {
-        args = mkOptionDefault (unionOfDisjoint cfg.args {inherit lib;});
+        args = mkOptionDefault ({inherit lib;} // cfg.args {inherit lib;});
         root = mkOptionDefault (append cfg.root "modules");
       };
 
       templates = {
-        args = mkOptionDefault cfg.args;
+        args = mkOptionDefault ({inherit lib;} // cfg.args {inherit lib;});
         root = mkOptionDefault (append cfg.root "templates");
       };
 
@@ -112,11 +110,11 @@ in {
     flake = {
       lib =
         unionOfDisjoint (resolveDefault' cfg.lib.name) (resolveNested cfg.lib.root cfg.lib.name)
-        |> mapAttrs (_name: transformLib');
+        |> mapAttrs (_name: transformLib cfg.lib.args);
 
       templates =
-        unionOfDisjoint (resolveDefault' cfg.template.name) (resolveNested cfg.template.root cfg.template.name)
-        |> mapAttrs (_name: transformTemplate);
+        unionOfDisjoint (resolveDefault' cfg.templates.name) (resolveNested cfg.templates.root cfg.templates.name)
+        |> mapAttrs (_name: transformLib cfg.templates.args);
 
       # Modules
       flakeModules =
