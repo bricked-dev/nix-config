@@ -142,19 +142,21 @@ in {
     pkgs.bacon
     pkgs.bitwarden-desktop
     pkgs.cargo-flamegraph
+    pkgs.epiphany
     pkgs.fd
+    pkgs.fractal
+    pkgs.fragments
     pkgs.gcc
     pkgs.home-manager
+    pkgs.krita
     pkgs.nix-melt
     pkgs.nurl
     pkgs.ripgrep
     pkgs.sbctl
-    pkgs.signal-desktop
+    pkgs.speedtest
     pkgs.tuba
     pkgs.typesetter
     pkgs.typst
     pkgs.vesktop
-    pkgs.whatsapp-electron
-    pkgs.krita
   ];
 }
