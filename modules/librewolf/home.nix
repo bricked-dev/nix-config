@@ -78,6 +78,11 @@ in {
               icon = "https://cdn.search.brave.com/serp/v3/_app/immutable/assets/brave-search-icon.CsIFM2aN.svg";
               definedAliases = ["@brave" "@br"];
             };
+            "Cargo Book" = {
+              urls = singleton {template = "file://${config.programs.rust.package}/share/doc/rust/html/cargo/index.html?search={searchTerms}";};
+              icon = "https://rust-lang.org/static/images/favicon-32x32.png";
+              definedAliases = ["@cargobook" "@cgb"];
+            };
             "Codeberg" = {
               urls = singleton {template = "https://codeberg.org/explore/repos?q={searchTerms}";};
               icon = "https://codeberg.org/assets/img/favicon.svg";
@@ -193,22 +198,22 @@ in {
               definedAliases = ["@porkbun" "@pb"];
             };
             "Rust Book" = {
-              urls = singleton {template = "https://rust.docs.localhost/book/?search={searchTerms}";};
+              urls = singleton {template = "file://${config.programs.rust.package}/share/doc/rust/html/book/index.html?search={searchTerms}";};
               icon = "https://rust-lang.org/static/images/favicon-32x32.png";
               definedAliases = ["@rustbook" "@rsb"];
             };
             "Rust Reference" = {
-              urls = singleton {template = "https://rust.docs.localhost/reference/?search={searchTerms}";};
+              urls = singleton {template = "file://${config.programs.rust.package}/share/doc/rust/html/reference/index.html?search={searchTerms}";};
               icon = "https://rust-lang.org/static/images/favicon-32x32.png";
               definedAliases = ["@rustreference" "@rsr"];
             };
             "Rust Standard Library" = {
-              urls = singleton {template = "https://rust.docs.localhost/std/?search={searchTerms}";};
+              urls = singleton {template = "file://${config.programs.rust.package}/share/doc/rust/html/std/index.html?search={searchTerms}";};
               icon = "https://rust-lang.org/static/images/favicon-32x32.png";
               definedAliases = ["@ruststandardlibrary" "@rsl"];
             };
             "Rustnomicon" = {
-              urls = singleton {template = "https://rust.docs.localhost/nomicon/?search={searchTerms}";};
+              urls = singleton {template = "file://${config.programs.rust.package}/share/doc/rust/html/nomicon/index.html?search={searchTerms}";};
               icon = "https://rust-lang.org/static/images/favicon-32x32.png";
               definedAliases = ["@rustnomicon" "@rsn"];
             };
@@ -252,6 +257,11 @@ in {
               name = "Bricked";
               tags = ["bricked"];
               url = "https://bricked.dev";
+            }
+            {
+              name = "Cargo Book";
+              tags = ["rust" "cargo" "docs"];
+              url = "file://${config.programs.rust.package}/share/doc/rust/html/cargo/index.html";
             }
             {
               name = "Codeberg";
@@ -316,27 +326,27 @@ in {
             {
               name = "Rust Book";
               tags = ["rust" "docs"];
-              url = "https://rust.docs.localhost/book/";
+              url = "file://${config.programs.rust.package}/share/doc/rust/html/book/index.html";
             }
             {
               name = "Rust Documentation";
               tags = ["rust" "docs"];
-              url = "https://rust.docs.localhost";
+              url = "file://${config.programs.rust.package}/share/doc/rust/html/index.html";
             }
             {
               name = "Rust Reference";
               tags = ["rust" "docs"];
-              url = "https://rust.docs.localhost/reference/";
+              url = "file://${config.programs.rust.package}/share/doc/rust/html/reference/index.html";
             }
             {
               name = "Rust Standard Library";
               tags = ["rust" "docs"];
-              url = "https://rust.docs.localhost/std/";
+              url = "file://${config.programs.rust.package}/share/doc/rust/html/std/index.html";
             }
             {
               name = "Rustnomicon";
               tags = ["rust" "docs"];
-              url = "https://rust.docs.localhost/nomicon/";
+              url = "file://${config.programs.rust.package}/share/doc/rust/html/nomicon/index.html";
             }
             {
               name = "Stylix Repository";
