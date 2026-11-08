@@ -27,33 +27,53 @@ in {
           cpr = "cp --recursive";
 
           # Nix
-          nr = "nix run";
-          nf = "nix flake";
+          nb = "nix build";
+          nfs = "nix flake show";
           nfu = "nix flake update";
+          nl = "nix-locate";
+          nm = "nix-melt";
+          nr = "nix run";
+          nrp = "nix repl .";
+          ns = "nix shell";
+
+          # NixOS
           nrs = "nixos-rebuild switch --sudo --flake .";
           nrt = "nixos-rebuild test --sudo --flake .";
-          hms = "home-manager switch --flake .";
+
+          # Home Manager
+          hmn = "home-manager news --flake .";
+          hms = "home-manager switch -b backup --flake .";
 
           # Git
-          gl = "git log";
-          glo = "git log --oneline";
-          gc = "git commit";
-          gcm = "git commit --message";
-          gca = "git commit --amend";
-          gcan = "git commit --amend --no-edit";
-          gp = "git push";
-          gpf = "git push --force";
-          gpl = "git pull";
           ga = "git add";
           gaa = "git add .";
           gap = "git add --patch";
+          gc = "git commit";
+          gca = "git commit --amend";
+          gcan = "git commit --amend --no-edit";
+          gcm = "git commit --message";
+          gcp = "git cherry-pick";
+          gcpa = "git cherry-pick --abort";
           gd = "git diff";
-          gdn = "git diff --name-only";
-          gdh = "git diff HEAD~ HEAD";
           gdc = "git diff --cached";
           gdcn = "git diff --cached --name-only";
-          gcp = "git cherry-pick";
+          gdh = "git diff HEAD~ HEAD";
+          gdhn = "git diff --name-only HEAD~ HEAD";
+          gdn = "git diff --name-only";
+          gf = "git fetch";
+          gl = "git log";
+          glo = "git log --oneline";
+          gm = "git merge";
+          gma = "git merge --abort";
+          gp = "git push";
+          gpf = "git push --force";
+          gpl = "git pull";
+          gr = "git rebase";
+          gra = "git rebase --abort";
+          gri = "git rebase --interactive";
+          grir = "git rebase --interactive --root";
           gs = "git switch";
+          gsc = "git switch --create";
         };
       };
     };
