@@ -30,7 +30,6 @@ in {
 
       targets.librewolf = {
         profileNames = ["default"];
-        themeExtension.enable = true;
         firefoxGnomeTheme.enable = true;
       };
     };

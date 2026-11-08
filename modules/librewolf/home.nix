@@ -29,6 +29,7 @@ in {
 
       profiles.default = {
         name = "Default";
+
         extensions = {
           force = true;
           packages = [
@@ -357,27 +358,37 @@ in {
         };
 
         settings = {
+          # Extensions
           "extensions.autoDisableScopes" = 0; # Enable extensions
-          "browser.aboutConfig.showWarning" = false;
-          "browser.tabs.closeWindowWithLastTab" = false;
+          "xpinstall.signatures.required" = false; # Install unsigned extensions
 
           # Privacy
-          "privacy.sanitize.sanitizeOnShutdown" = false; # Keep history
           "privacy.resistFingerprinting.letterboxing" = true;
+
+          # Sanitize
+          "privacy.clearOnShutdown_v2.browsingHistoryAndDownloads" = false;
+          "privacy.clearOnShutdown_v2.cache" = true;
+          "privacy.clearOnShutdown_v2.cookiesAndStorage" = true;
+          "privacy.clearOnShutdown_v2.formdata" = true;
+          "privacy.clearOnShutdown_v2.historyFormDataAndDownloads" = false;
+          "privacy.clearOnShutdown_v2.siteSettings" = false;
+          "privacy.sanitize.clearOnShutdown.hasMigratedToNewPrefs3" = true;
+
+          # UI
+          "browser.aboutConfig.showWarning" = false;
+          "browser.tabs.closeWindowWithLastTab" = false;
+          "browser.toolbars.bookmarks.visibility" = "never";
+          "browser.uiCustomization.state" = readFile ./toolbar.json;
 
           # Blank homepage
           "browser.newtabpage.enable" = false;
           "browser.startup.homepage" = "about:newtab";
           "browser.startup.page" = 3;
-          "browser.toolbars.bookmarks.visibility" = "never";
-
-          # UI customization
-          "browser.uiCustomization.state" = readFile ./toolbar.json;
 
           # Gnome Theme
+          "gnomeTheme.allTabsButtonOnOverflow" = true;
           "gnomeTheme.bookmarksToolbarUnderTabs" = true;
-          "gnomeTheme.dragWindowHeaderbarButtons" = true;
-          "gnomeTheme.symbolicTabIcons" = true;
+          "gnomeTheme.hideSingleTab" = true;
         };
       };
     };
