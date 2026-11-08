@@ -112,7 +112,7 @@
 
     # Preferences
     stylix = {
-      url = "github:bricked-dev/stylix";
+      url = "git+https://codeberg.org/bricked/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.systems.follows = "systems";
       inputs.flake-parts.follows = "flake-parts";
@@ -136,6 +136,7 @@
       url = "github:nix-community/lanzaboote/v1.1.0";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.pre-commit.follows = "git-hooks";
+      inputs.rust-overlay.follows = "rust-overlay";
     };
 
     # Programs
@@ -144,6 +145,7 @@
       inputs.flake-parts.follows = "flake-parts";
       inputs.git-hooks.follows = "git-hooks";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.rust-overlay.follows = "rust-overlay";
       inputs.systems.follows = "systems";
       inputs.treefmt-nix.follows = "treefmt-nix";
     };
@@ -152,6 +154,11 @@
       url = "github:mangowm/mango";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-parts.follows = "flake-parts";
+
+      inputs.scenefx = {
+        inputs.flake-utils.follows = "flake-utils";
+        inputs.systems.follows = "systems";
+      };
     };
 
     spicetify-nix = {
@@ -161,7 +168,7 @@
     };
 
     firefox-addons = {
-      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+      url = "git+https://gitlab.com/rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

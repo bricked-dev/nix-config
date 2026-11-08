@@ -258,18 +258,18 @@
       },
       "locked": {
         "dir": "pkgs/firefox-addons",
-        "lastModified": 1788148965,
-        "narHash": "sha256-1CNXzumVKWLmcWlZlryXhr9W9DbpuwchQ8KQZ91NQhM=",
-        "owner": "rycee",
-        "repo": "nur-expressions",
-        "rev": "a8b90bdf8c7680604c600965a13224c22dfc68da",
-        "type": "gitlab"
+        "lastModified": 1791691571,
+        "narHash": "sha256-btJ4vVIAyQp3BqlARGdbJb9iq3WD7/KTSj0QW5DmvLM=",
+        "ref": "refs/heads/master",
+        "rev": "17a8cf0be701c3f264e42c8465368a0cc602bb18",
+        "revCount": 4986,
+        "type": "git",
+        "url": "https://gitlab.com/rycee/nur-expressions"
       },
       "original": {
         "dir": "pkgs/firefox-addons",
-        "owner": "rycee",
-        "repo": "nur-expressions",
-        "type": "gitlab"
+        "type": "git",
+        "url": "https://gitlab.com/rycee/nur-expressions"
       }
     },
     "firefox-extensions-declarative": {
@@ -377,28 +377,6 @@
     "flake-utils": {
       "inputs": {
         "systems": [
-          "systems"
-        ]
-      },
-      "locked": {
-        "lastModified": 1731533236,
-        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "type": "github"
-      }
-    },
-    "flake-utils_2": {
-      "inputs": {
-        "systems": [
-          "mangowm",
-          "scenefx",
           "systems"
         ]
       },
@@ -540,7 +518,9 @@
         "nixpkgs": [
           "nixpkgs"
         ],
-        "rust-overlay": "rust-overlay",
+        "rust-overlay": [
+          "rust-overlay"
+        ],
         "systems": [
           "systems"
         ],
@@ -549,11 +529,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1786594243,
-        "narHash": "sha256-7SituGpOYXmCgoht1HmH6LyRl0C/n/KY8U35sJYiSaQ=",
+        "lastModified": 1792097596,
+        "narHash": "sha256-g7xHfhmX9Iqe9J8Fv0Hz75imm1TT5saNcXD4/Ez6M+Q=",
         "ref": "refs/heads/main",
-        "rev": "9463f115c345e41882395f5010fdedff468db2c2",
-        "revCount": 35,
+        "rev": "f0f4549ab856a23083b680a23f32d476bad73f9c",
+        "revCount": 37,
         "submodules": true,
         "type": "git",
         "url": "https://codeberg.org/bricked/gremlin-shell"
@@ -607,7 +587,9 @@
         "pre-commit": [
           "git-hooks"
         ],
-        "rust-overlay": "rust-overlay_2"
+        "rust-overlay": [
+          "rust-overlay"
+        ]
       },
       "locked": {
         "lastModified": 1782141370,
@@ -905,57 +887,15 @@
         "nixos-generators": "nixos-generators",
         "nixos-nspawn": "nixos-nspawn",
         "nixpkgs": "nixpkgs",
-        "rust-overlay": "rust-overlay_3",
+        "rust-overlay": "rust-overlay",
         "spicetify-nix": "spicetify-nix",
         "stylix": "stylix",
-        "systems": "systems_2",
+        "systems": "systems",
         "treefmt-nix": "treefmt-nix",
         "wallpaper": "wallpaper"
       }
     },
     "rust-overlay": {
-      "inputs": {
-        "nixpkgs": [
-          "gremlin-shell",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1783921439,
-        "narHash": "sha256-DsSIQSRMrLOz40LrGZ03sp2RlJ9sz3wKpd8XPTOzXnw=",
-        "owner": "oxalica",
-        "repo": "rust-overlay",
-        "rev": "e013376c32a8fcf07ddb6ec71739552bc118b7bd",
-        "type": "github"
-      },
-      "original": {
-        "owner": "oxalica",
-        "repo": "rust-overlay",
-        "type": "github"
-      }
-    },
-    "rust-overlay_2": {
-      "inputs": {
-        "nixpkgs": [
-          "lanzaboote",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1782012058,
-        "narHash": "sha256-9mWUnReOUXfKjZuJAL/bAFH3LUyECTRtXgSNVjRw3UY=",
-        "owner": "oxalica",
-        "repo": "rust-overlay",
-        "rev": "8534567325bd8a8d2928e6afd81e0a87d19efd3c",
-        "type": "github"
-      },
-      "original": {
-        "owner": "oxalica",
-        "repo": "rust-overlay",
-        "type": "github"
-      }
-    },
-    "rust-overlay_3": {
       "inputs": {
         "nixpkgs": [
           "nixpkgs"
@@ -977,12 +917,16 @@
     },
     "scenefx": {
       "inputs": {
-        "flake-utils": "flake-utils_2",
+        "flake-utils": [
+          "flake-utils"
+        ],
         "nixpkgs": [
           "mangowm",
           "nixpkgs"
         ],
-        "systems": "systems"
+        "systems": [
+          "systems"
+        ]
       },
       "locked": {
         "lastModified": 1782624992,
@@ -1045,35 +989,20 @@
         "tinted-zed": "tinted-zed"
       },
       "locked": {
-        "lastModified": 1790619312,
-        "narHash": "sha256-Me0yHC1q3vFnKJRgk29v70VTsCppQKiMwiKZSbFgJH8=",
-        "owner": "bricked-dev",
-        "repo": "stylix",
-        "rev": "1ea7913be596e17c09d54458d1834167ca4fc5ad",
-        "type": "github"
+        "lastModified": 1792089910,
+        "narHash": "sha256-pDr3SaCYaQ1HST5b/HM5xalI9qO77uRp7rc2IhMjdM4=",
+        "ref": "refs/heads/master",
+        "rev": "15a66bdf7ef57693c5d3c8fc91a3f0a0f3c8fc2f",
+        "revCount": 1492,
+        "type": "git",
+        "url": "https://codeberg.org/bricked/stylix"
       },
       "original": {
-        "owner": "bricked-dev",
-        "repo": "stylix",
-        "type": "github"
+        "type": "git",
+        "url": "https://codeberg.org/bricked/stylix"
       }
     },
     "systems": {
-      "locked": {
-        "lastModified": 1689347949,
-        "narHash": "sha256-12tWmuL2zgBgZkdoB6qXZsgJEH9LR3oUgpaQq2RbI80=",
-        "owner": "nix-systems",
-        "repo": "default-linux",
-        "rev": "31732fcf5e8fea42e59c2488ad31a0e651500f68",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-systems",
-        "repo": "default-linux",
-        "type": "github"
-      }
-    },
-    "systems_2": {
       "locked": {
         "lastModified": 1689347949,
         "narHash": "sha256-12tWmuL2zgBgZkdoB6qXZsgJEH9LR3oUgpaQq2RbI80=",
