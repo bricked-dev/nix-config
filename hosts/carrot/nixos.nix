@@ -6,6 +6,7 @@
 }: let
   inherit (pkgs.stdenv.hostPlatform) system;
   diskoPkgs = inputs.disko.packages.${system};
+  selfPkgs = self.packages.${system};
 in {
   imports = [
     self.nixosModules.all
@@ -83,11 +84,8 @@ in {
 
   # Shell
   console.useXkbConfig = true;
-
-  programs.nushell = {
-    enable = true;
-    defaultUserShell = true;
-  };
+  programs.nushell.enable = true;
+  users.defaultUserShell = selfPkgs.nushell-login;
 
   # Programs
   programs.rust.enable = true;
