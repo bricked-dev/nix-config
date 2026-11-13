@@ -6,13 +6,17 @@
   ...
 }: let
   inherit (builtins) readFile;
-  inherit (lib) mkIf;
+  inherit (lib.modules) mkIf;
+  inherit (pkgs.stdenv.hostPlatform) system;
 
   cfg = config.programs.anyrun;
-  selfPkgs = self.packages.${pkgs.stdenv.hostPlatform.system};
+  selfPkgs = self.packages.${system};
 in {
   config = mkIf cfg.enable {
     programs.anyrun = {
+      extraCss = readFile ./style.css;
+      extraConfigFiles."power.ron".source = ./power.ron;
+
       config = {
         closeOnClick = true;
 
@@ -23,9 +27,6 @@ in {
           "${cfg.package}/lib/libsymbols.so"
         ];
       };
-
-      extraCss = readFile ./style.css;
-      extraConfigFiles."power.ron".source = ./power.ron;
     };
   };
 }
