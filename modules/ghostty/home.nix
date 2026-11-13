@@ -11,6 +11,7 @@ in {
     programs.ghostty.settings = {
       gtk-titlebar = true;
       window-decoration = "client";
+      window-inherit-working-directory = false;
       window-padding-x = 10;
       window-padding-y = 10;
     };
