@@ -65,19 +65,6 @@ in {
     zswap.enable = true;
   };
 
-  # Networking
-  services.openssh = {
-    enable = true;
-    openFirewall = false;
-    listenAddresses = [];
-
-    settings = {
-      PasswordAuthentication = false;
-      KbdInteractiveAuthentication = false;
-      PermitRootLogin = "no";
-    };
-  };
-
   # Printing
   services.avahi.enable = true;
 

@@ -60,19 +60,6 @@ in {
 
   systemd.tpm2.enable = false;
 
-  # Networking
-  services.openssh = {
-    enable = true;
-    openFirewall = false;
-    listenAddresses = [];
-
-    settings = {
-      PasswordAuthentication = false;
-      KbdInteractiveAuthentication = false;
-      PermitRootLogin = "no";
-    };
-  };
-
   # Theming
   stylix.enable = true;
 
