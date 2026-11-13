@@ -57,7 +57,6 @@
   inputs = {
     # Nix
     nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
-
     systems.url = "github:nix-systems/default-linux";
 
     home-manager = {
@@ -127,13 +126,11 @@
     agenix = {
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "home-manager";
-      inputs.systems.follows = "systems";
     };
 
     # Boot
     lanzaboote = {
-      url = "github:nix-community/lanzaboote/v1.1.0";
+      url = "github:nix-community/lanzaboote/v1.2.0";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.pre-commit.follows = "git-hooks";
       inputs.rust-overlay.follows = "rust-overlay";
@@ -168,7 +165,7 @@
     };
 
     firefox-addons = {
-      url = "git+https://gitlab.com/rycee/nur-expressions?dir=pkgs/firefox-addons";
+      url = "git+https://gitlab.com/rycee/nur-expressions.git?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
