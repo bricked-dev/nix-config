@@ -32,23 +32,14 @@ in {
   };
 
   # Nix
+  environment.etc."nixos".source = self.outPath;
   system.stateVersion = "26.05";
   nixpkgs.config.allowUnfree = true;
 
   nix = {
-    settings = {
-      experimental-features = ["nix-command" "flakes"];
-      trusted-users = ["@wheel"];
-    };
-
-    gc = {
-      automatic = true;
-      dates = "daily";
-      options = "--delete-older-than 30d";
-    };
+    gc.automatic = true;
+    settings.trusted-users = ["@wheel"];
   };
-
-  environment.etc."nixos".source = self.outPath;
 
   # Boot
   boot = {
@@ -57,8 +48,6 @@ in {
     plymouth.enable = true;
     zswap.enable = true;
   };
-
-  systemd.tpm2.enable = false;
 
   # Theming
   stylix.enable = true;

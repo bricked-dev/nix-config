@@ -44,17 +44,8 @@ in {
   system.stateVersion = "26.05";
 
   nix = {
-    gc = {
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 30d";
-      persistent = true;
-    };
-
-    settings = {
-      experimental-features = ["nix-command" "flakes" "pipe-operators"];
-      trusted-users = ["@wheel"];
-    };
+    gc.automatic = true;
+    settings.trusted-users = ["@wheel"];
   };
 
   # Boot
