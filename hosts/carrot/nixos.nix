@@ -131,9 +131,7 @@ in {
     pkgs.nix-melt
     pkgs.nurl
     pkgs.ripgrep
-    pkgs.sbctl
     pkgs.tuba
-    pkgs.typesetter
     pkgs.typst
     pkgs.vesktop
   ];
