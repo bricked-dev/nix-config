@@ -13,6 +13,7 @@ in {
   options.programs.proton-vpn = {
     enable = mkEnableOption "the Proton VPN client";
     package = mkPackageOption pkgs "proton-vpn" {};
+    cliPackage = mkPackageOption pkgs "proton-vpn-cli" {};
 
     autostart = mkOption {
       description = "Whether to start the client on login.";
@@ -23,7 +24,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home.packages = [cfg.package];
+    home.packages = [cfg.package cfg.cliPackage];
 
     xdg.autostart = mkIf cfg.autostart {
       enable = true;
