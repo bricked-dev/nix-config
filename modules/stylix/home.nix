@@ -5,7 +5,7 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkIf;
+  inherit (lib.modules) mkIf;
 
   cfg = config.stylix;
 in {
@@ -28,9 +28,16 @@ in {
         size = 24;
       };
 
-      targets.librewolf = {
-        profileNames = ["default"];
-        firefoxGnomeTheme.enable = true;
+      targets = {
+        qt = {
+          enable = true;
+          standardDialogs = "xdgdesktopportal";
+        };
+
+        librewolf = {
+          profileNames = ["default"];
+          firefoxGnomeTheme.enable = true;
+        };
       };
     };
   };
