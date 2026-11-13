@@ -1,0 +1,23 @@
+name: "Run Flake checks"
+
+on:
+  push:
+
+env:
+  EXTRA_NIX_CONFIG: |
+    experimental-features = nix-command flakes pipe-operators
+    substituters = https://cache.nixos.org https://nix-community.cachix.org https://bricked.cachix.org
+    trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= bricked.cachix.org-1:SPpNjrCYzlfisekwWTN7dEUQs+OrirrM92h1ZoEnciY=
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v5
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          extra_nix_config: "${{ env.EXTRA_NIX_CONFIG }}"
+      - name: Run Flake checks
+        run: nix flake check
