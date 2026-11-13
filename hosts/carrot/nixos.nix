@@ -112,13 +112,13 @@ in {
   };
 
   # Programs
-  programs.adwaita-demo.enable = true;
   programs.rust.enable = true;
   programs.spicetify.enable = true;
   programs.steam.enable = true;
 
   environment.systemPackages = [
     diskoPkgs.disko
+    pkgs.libadwaita.devdoc
     pkgs.alejandra
     pkgs.bacon
     pkgs.bitwarden-desktop

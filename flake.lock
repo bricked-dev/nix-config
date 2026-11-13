@@ -480,11 +480,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794578431,
-        "narHash": "sha256-of2VwDSuh46J/8cBOwuQsg208Zy4tKbNyKvZ9uwy8os=",
+        "lastModified": 1794589008,
+        "narHash": "sha256-9bCy9k3t6hzaYJRC+SOHgZJL4xX3cGMI4bNhsX7E0v0=",
         "ref": "refs/heads/main",
-        "rev": "70edaf8db5d653920a405094d79f3fdba9680e9f",
-        "revCount": 49,
+        "rev": "cc6bc13e0aa29c672906a2da6aa7c5bcd3ef43ff",
+        "revCount": 56,
         "submodules": true,
         "type": "git",
         "url": "https://codeberg.org/bricked/gremlin-shell"
@@ -627,11 +627,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1783177174,
-        "narHash": "sha256-bsVSaHCIQLTldWAwkzBtz8aKx2SgwWsAb+Bx4BCo+ug=",
+        "lastModified": 1784479525,
+        "narHash": "sha256-Iy15f5dPO3WC/W1avDNYQdFERSXHxwH7ZrpUcIFeLhw=",
         "owner": "xtheeq",
         "repo": "msnap",
-        "rev": "7c35a42df1f43d107a60966168fe27ef9b487602",
+        "rev": "c2df4e03ad52854f652da18fef0d99f8988588ca",
         "type": "github"
       },
       "original": {
