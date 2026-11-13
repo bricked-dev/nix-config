@@ -5,6 +5,7 @@ on:
 
 env:
   EXTRA_NIX_CONFIG: |
+    experimental-features = nix-command flakes pipe-operators
     substituters = https://cache.nixos.org https://nix-community.cachix.org https://bricked.cachix.org
     trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= bricked.cachix.org-1:SPpNjrCYzlfisekwWTN7dEUQs+OrirrM92h1ZoEnciY=
 
@@ -31,7 +32,7 @@ jobs:
           --no-nom
           --flake ".#devShells.x86_64-linux.default"
 
-  cache_potato:
+  cache_carrot:
     runs-on: ubuntu-latest
     steps:
       - name: Clone repository
@@ -47,55 +48,11 @@ jobs:
         with:
           name: bricked
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
-      - name: Build NixOS configuration for Potato
+      - name: Build NixOS configuration for Carrot
         run: >
           nix run github:Mic92/nix-fast-build --
           --no-nom
-          --flake ".#legacyPackages.x86_64-linux.nixosConfigurations.potato.config.system.build.toplevel"
-
-  cache_taro:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Clone repository
-        uses: actions/checkout@v5
-      - name: Claim disk space
-        uses: wimpysworld/nothing-but-nix@main
-      - name: Install Nix
-        uses: cachix/install-nix-action@v31
-        with:
-          extra_nix_config: "${{ env.EXTRA_NIX_CONFIG }}"
-      - name: Set up Cachix
-        uses: cachix/cachix-action@v15
-        with:
-          name: bricked
-          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
-      - name: Build NixOS configuration for Taro
-        run: >
-          nix run github:Mic92/nix-fast-build --
-          --no-nom
-          --flake ".#legacyPackages.x86_64-linux.nixosConfigurations.taro.config.system.build.toplevel"
-
-  cache_generator:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Clone repository
-        uses: actions/checkout@v5
-      - name: Claim disk space
-        uses: wimpysworld/nothing-but-nix@main
-      - name: Install Nix
-        uses: cachix/install-nix-action@v31
-        with:
-          extra_nix_config: "${{ env.EXTRA_NIX_CONFIG }}"
-      - name: Set up Cachix
-        uses: cachix/cachix-action@v15
-        with:
-          name: bricked
-          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
-      - name: Build NixOS generator for Bricked on Potato
-        run: >
-          nix run github:Mic92/nix-fast-build --
-          --no-nom
-          --flake ".#legacyPackages.x86_64-linux.nixosGenerators.bricked@potato.install-iso"
+          --flake ".#legacyPackages.x86_64-linux.nixosConfigurations.carrot.config.system.build.toplevel"
 
   cache_home:
     runs-on: ubuntu-latest
