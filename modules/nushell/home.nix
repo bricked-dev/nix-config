@@ -43,6 +43,7 @@ in {
           # Home Manager
           hmn = "home-manager news --flake .";
           hms = "home-manager switch -b backup --flake .";
+          hmsn = "home-manager switch -b backup --flake /etc/nixos";
 
           # Git
           ga = "git add";
@@ -64,12 +65,14 @@ in {
           gl = "git log";
           glo = "git log --oneline";
           gm = "git merge";
+          gmc = "git merge --continue";
           gma = "git merge --abort";
           gp = "git push";
           gpf = "git push --force";
           gpl = "git pull";
           gr = "git rebase";
           gra = "git rebase --abort";
+          grc = "git rebase --continue";
           gri = "git rebase --interactive";
           grir = "git rebase --interactive --root";
           gs = "git switch";
