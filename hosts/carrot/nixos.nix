@@ -60,22 +60,10 @@ in {
 
   # Boot
   boot = {
-    initrd.systemd.enable = true;
+    lanzaboote.enable = true;
     loader.efi.canTouchEfiVariables = true;
     plymouth.enable = true;
-    silent = true;
-
-    kernelParams = [
-      "zswap.enabled=1"
-      "zswap.compressor=lz4"
-      "zswap.max_pool_percent=25"
-      "zswap.shrinker_enabled=1"
-    ];
-
-    lanzaboote = {
-      enable = true;
-      pkiBundle = "/var/lib/sbctl";
-    };
+    zswap.enable = true;
   };
 
   # Networking

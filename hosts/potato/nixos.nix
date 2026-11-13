@@ -53,28 +53,10 @@ in {
 
   # Boot
   boot = {
-    loader = {
-      systemd-boot = {
-        enable = true;
-        configurationLimit = 10;
-      };
-      efi.canTouchEfiVariables = true;
-    };
-
-    initrd.systemd = {
-      enable = true;
-      tpm2.enable = false;
-    };
-
+    lanzaboote.enable = true;
+    loader.efi.canTouchEfiVariables = true;
     plymouth.enable = true;
-    silent = true;
-
-    kernelParams = [
-      "zswap.enabled=1"
-      "zswap.compressor=lz4"
-      "zswap.max_pool_percent=25"
-      "zswap.shrinker_enabled=1"
-    ];
+    zswap.enable = true;
   };
 
   systemd.tpm2.enable = false;
