@@ -101,13 +101,8 @@ in {
   # Desktop
   stylix.enable = true;
   services.displayManager.gdm.enable = true;
+  services.gremlin-shell.enable = true;
   programs.mango.enable = true;
-
-  services.gremlin-shell = {
-    enable = true;
-    applications.enableCore = true;
-    applications.enableDeveloper = true;
-  };
 
   # Shell
   console.useXkbConfig = true;
@@ -130,10 +125,8 @@ in {
     pkgs.bacon
     pkgs.bitwarden-desktop
     pkgs.cargo-flamegraph
-    pkgs.epiphany
     pkgs.fd
     pkgs.fractal
-    pkgs.fragments
     pkgs.gcc
     pkgs.home-manager
     pkgs.krita
@@ -141,7 +134,6 @@ in {
     pkgs.nurl
     pkgs.ripgrep
     pkgs.sbctl
-    pkgs.speedtest
     pkgs.tuba
     pkgs.typesetter
     pkgs.typst

@@ -83,13 +83,8 @@ in {
 
   # Desktop
   services.displayManager.gdm.enable = true;
+  services.gremlin-shell.enable = true;
   programs.mango.enable = true;
-
-  services.gremlin-shell = {
-    enable = true;
-    applications.enableCore = true;
-    applications.enableDeveloper = true;
-  };
 
   # Shell
   console.useXkbConfig = true;
