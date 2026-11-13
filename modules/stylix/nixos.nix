@@ -4,7 +4,7 @@
   inputs,
   ...
 }: let
-  inherit (lib) mkIf;
+  inherit (lib.modules) mkIf;
 
   cfg = config.stylix;
 in {
@@ -15,9 +15,12 @@ in {
   config = mkIf cfg.enable {
     stylix = {
       homeManagerIntegration.autoImport = false;
-      targets.plymouth.enable = false;
-      targets.qt.enable = true;
-      targets.gtksourceview.enable = false;
+
+      targets = {
+        gtksourceview.enable = false;
+        plymouth.enable = false;
+        qt.enable = true;
+      };
     };
   };
 }
