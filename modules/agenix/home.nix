@@ -1,3 +1,0 @@
-{inputs, ...}: {
-  imports = [inputs.agenix.homeManagerModules.default ./common.nix];
-}

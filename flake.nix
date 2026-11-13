@@ -122,12 +122,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Secrets
-    agenix = {
-      url = "github:ryantm/agenix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     # Boot
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v1.2.0";

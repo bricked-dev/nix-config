@@ -5,7 +5,6 @@
   ...
 }: let
   inherit (pkgs.stdenv.hostPlatform) system;
-  agenixPkgs = inputs.agenix.packages.${system};
   diskoPkgs = inputs.disko.packages.${system};
 in {
   imports = [
@@ -100,7 +99,6 @@ in {
   programs.spicetify.enable = true;
 
   environment.systemPackages = [
-    agenixPkgs.agenix
     diskoPkgs.disko
     pkgs.alejandra
     pkgs.bacon
