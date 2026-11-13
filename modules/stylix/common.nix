@@ -11,8 +11,9 @@
 in {
   config = mkIf cfg.enable {
     stylix = {
-      image = inputs.wallpaper;
       base16Scheme = ./coal.yaml;
+      image = inputs.wallpaper;
+      polarity = "dark";
 
       fonts = rec {
         serif = sansSerif;
