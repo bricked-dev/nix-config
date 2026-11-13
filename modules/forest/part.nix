@@ -118,7 +118,7 @@ in {
 
       # Modules
       flakeModules =
-        unionOfDisjoint (resolveDefault' cfg.modules.flakePartsName) (resolveNestedModules cfg.modules.flakePartsName)
+        unionOfDisjoint (resolveDefault' cfg.modules.flakePartName) (resolveNestedModules cfg.modules.flakePartName)
         |> mapAttrs (_name: transformModule' "flake");
 
       homeModules =
