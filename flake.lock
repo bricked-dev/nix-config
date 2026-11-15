@@ -814,11 +814,11 @@
         "tinted-zed": "tinted-zed"
       },
       "locked": {
-        "lastModified": 1792089910,
-        "narHash": "sha256-pDr3SaCYaQ1HST5b/HM5xalI9qO77uRp7rc2IhMjdM4=",
+        "lastModified": 1794769864,
+        "narHash": "sha256-KuYWuImCI+idVe+qlFpEhz5Oid4g0CiA0KELw1UYojk=",
         "ref": "refs/heads/master",
-        "rev": "15a66bdf7ef57693c5d3c8fc91a3f0a0f3c8fc2f",
-        "revCount": 1492,
+        "rev": "572ec4e202798b11d09fb8fee4a8e28b66bf0765",
+        "revCount": 1493,
         "type": "git",
         "url": "https://codeberg.org/bricked/stylix"
       },
