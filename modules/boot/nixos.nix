@@ -3,13 +3,15 @@
   lib,
   ...
 }: let
-  inherit (lib) mkIf;
+  inherit (lib.modules) mkIf;
+  inherit (lib.options) mkEnableOption;
 
-  cfg = config.boot.plymouth;
+  cfg = config.boot;
 in {
-  config = mkIf cfg.enable {
+  options.boot.silent = mkEnableOption "silent boot";
+
+  config = mkIf cfg.silent {
     boot = {
-      # Enable "Silent Boot"
       # See https://wiki.nixos.org/wiki/Plymouth#Basic_Config
       consoleLogLevel = 3;
       loader.timeout = 0;
