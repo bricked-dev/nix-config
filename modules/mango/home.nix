@@ -49,7 +49,7 @@ in {
     wayland.windowManager.mango = {
       settings = {
         # Monitors
-        monitor_rule = "model:U28E590,scale:1.5";
+        monitor_rule = "model:U28E590,scale:1.5,model:MND508ZB1-1,scale:1.75";
 
         # Tags
         tag_rule = eachTag (tag: _: "id:${tag},layout_name:fair");
@@ -102,8 +102,13 @@ in {
         # Input
         disable_middle_paste = 1;
         drag_tile_to_tile = 1;
-        trackpad_natural_scrolling = 1;
         xkb_rules_layout = config.home.keyboard.layout;
+
+        trackpad = {
+          accel_profile = 1; # Flat
+          accel_speed = 1.0;
+          natural_scrolling = 1;
+        };
 
         # Binds
         axisbind = [
@@ -152,6 +157,8 @@ in {
         gesturebind = [
           "none,left,3,viewtoright_have_client"
           "none,right,3,viewtoleft_have_client"
+          "none,up,3,spawn,anyrun"
+          "none,down,3,spawn,anyrun"
         ];
 
         mousebind = [
