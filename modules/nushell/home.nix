@@ -39,6 +39,7 @@ in {
           # NixOS
           nrs = "nixos-rebuild switch --sudo --flake .";
           nrt = "nixos-rebuild test --sudo --flake .";
+          nri = "nixos-rebuild build-image --image-variant iso-installer --flake .#installer";
 
           # Home Manager
           hmn = "home-manager news --flake .";
@@ -70,11 +71,13 @@ in {
           gp = "git push";
           gpf = "git push --force";
           gpl = "git pull";
-          gr = "git rebase";
-          gra = "git rebase --abort";
-          grc = "git rebase --continue";
-          gri = "git rebase --interactive";
-          grir = "git rebase --interactive --root";
+          gr = "git reset";
+          grb = "git rebase";
+          grba = "git rebase --abort";
+          grbc = "git rebase --continue";
+          grbi = "git rebase --interactive";
+          grbir = "git rebase --interactive --root";
+          grs = "git restore";
           gs = "git switch";
           gsc = "git switch --create";
         };
