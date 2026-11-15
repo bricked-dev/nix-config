@@ -22,8 +22,10 @@
 
   # Shell
   programs.carapace.enable = true;
+  programs.difftastic.enable = true;
   programs.direnv.enable = true;
   programs.gpg.enable = true;
+  programs.mergiraf.enable = true;
   programs.nushell.enable = true;
   programs.starship.enable = true;
   programs.tealdeer.enable = true;
@@ -42,16 +44,6 @@
       format = "openpgp";
       key = "7B28 3F98 065C CDAC A4BF F235 0448 5EA0 7F3F AB31";
     };
-  };
-
-  programs.mergiraf = {
-    enable = true;
-    enableGitIntegration = true;
-  };
-
-  programs.difftastic = {
-    enable = true;
-    git.enable = true;
   };
 
   # Editor
