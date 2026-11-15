@@ -42,7 +42,7 @@ in {
   # Nix
   environment.etc."nixos".source = self.outPath;
   nixpkgs.config.allowUnfree = true;
-  system.stateVersion = "26.05";
+  system.stateVersion = "26.11";
 
   nix = {
     gc.automatic = true;

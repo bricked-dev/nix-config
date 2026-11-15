@@ -9,7 +9,7 @@
   programs.home-manager.enable = true;
 
   home = {
-    stateVersion = "26.05";
+    stateVersion = "26.11";
     username = "bricked";
     homeDirectory = "/home/bricked";
     keyboard.layout = "de";

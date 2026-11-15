@@ -3,7 +3,7 @@
 
   # Home
   home = {
-    stateVersion = "26.05";
+    stateVersion = "26.11";
     username = "nixos";
     homeDirectory = "/home/nixos";
     keyboard.layout = "us";

@@ -16,7 +16,7 @@ in {
   # System
   networking.hostName = "installer";
   environment.etc."nixos".source = self.outPath;
-  system.stateVersion = "26.05";
+  system.stateVersion = "26.11";
   nix.settings.trusted-users = ["@wheel"];
 
   # Users
