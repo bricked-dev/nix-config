@@ -9,11 +9,12 @@
 in {
   config = mkIf cfg.enable {
     programs.git = {
+      signing.signByDefault = true;
+
       settings = {
         pull.rebase = true;
         push.autoSetupRemote = true;
         init.defaultBranch = "main";
-        signing.signByDefault = true;
       };
     };
   };
