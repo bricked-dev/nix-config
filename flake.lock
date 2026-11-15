@@ -693,26 +693,6 @@
         "type": "github"
       }
     },
-    "nixdg-ninja": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1788885252,
-        "narHash": "sha256-M4dKtH7Uwfd73TNvwVcgT3nfvCGhSWOqnmFbhIg97AE=",
-        "owner": "notashelf",
-        "repo": "nixdg-ninja",
-        "rev": "6d296209d0dd406469102b977e3fa870da37bf4d",
-        "type": "github"
-      },
-      "original": {
-        "owner": "notashelf",
-        "repo": "nixdg-ninja",
-        "type": "github"
-      }
-    },
     "nixos-nspawn": {
       "inputs": {
         "flake-parts": [
@@ -797,7 +777,6 @@
         "lanzaboote": "lanzaboote",
         "mangowm": "mangowm",
         "nix-index-database": "nix-index-database",
-        "nixdg-ninja": "nixdg-ninja",
         "nixos-nspawn": "nixos-nspawn",
         "nixpkgs": "nixpkgs",
         "rust-overlay": "rust-overlay",

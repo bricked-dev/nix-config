@@ -112,11 +112,6 @@
       inputs.flake-parts.follows = "flake-parts";
     };
 
-    nixdg-ninja = {
-      url = "github:notashelf/nixdg-ninja";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     # Boot
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v1.2.0";
