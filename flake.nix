@@ -55,97 +55,18 @@
   };
 
   inputs = {
-    # Nix
+    flake-compat.url = "github:edolstra/flake-compat";
     nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
     systems.url = "github:nix-systems/default-linux";
-
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    nix-index-database = {
-      url = "github:nix-community/nix-index-database";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    # Flakes
-    flake-parts = {
-      url = "github:hercules-ci/flake-parts";
-      inputs.nixpkgs-lib.follows = "nixpkgs";
-    };
-
-    flake-compat.url = "github:edolstra/flake-compat";
-
-    flake-utils = {
-      url = "github:numtide/flake-utils";
-      inputs.systems.follows = "systems";
-    };
-
-    disko = {
-      url = "github:nix-community/disko/latest";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    # Hooks
-    git-hooks = {
-      url = "github:cachix/git-hooks.nix";
-      inputs.flake-compat.follows = "flake-compat";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    treefmt-nix = {
-      url = "github:numtide/treefmt-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
 
     devshell = {
       url = "github:numtide/devshell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Preferences
-    stylix = {
-      url = "git+https://codeberg.org/bricked/stylix";
+    disko = {
+      url = "github:nix-community/disko/latest";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.systems.follows = "systems";
-      inputs.flake-parts.follows = "flake-parts";
-    };
-
-    # Boot
-    lanzaboote = {
-      url = "github:nix-community/lanzaboote/v1.2.0";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.pre-commit.follows = "git-hooks";
-      inputs.rust-overlay.follows = "rust-overlay";
-    };
-
-    # Programs
-    gremlin-shell = {
-      url = "git+https://codeberg.org/bricked/gremlin-shell";
-      inputs.flake-parts.follows = "flake-parts";
-      inputs.git-hooks.follows = "git-hooks";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.rust-overlay.follows = "rust-overlay";
-      inputs.systems.follows = "systems";
-      inputs.treefmt-nix.follows = "treefmt-nix";
-    };
-
-    mangowm = {
-      url = "github:mangowm/mango";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-parts.follows = "flake-parts";
-
-      inputs.scenefx = {
-        inputs.flake-utils.follows = "flake-utils";
-        inputs.systems.follows = "systems";
-      };
-    };
-
-    spicetify-nix = {
-      url = "github:Gerg-L/spicetify-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.systems.follows = "systems";
     };
 
     firefox-addons = {
@@ -161,8 +82,57 @@
       inputs.treefmt-nix.follows = "treefmt-nix";
     };
 
-    rust-overlay = {
-      url = "github:oxalica/rust-overlay";
+    flake-parts = {
+      url = "github:hercules-ci/flake-parts";
+      inputs.nixpkgs-lib.follows = "nixpkgs";
+    };
+
+    flake-utils = {
+      url = "github:numtide/flake-utils";
+      inputs.systems.follows = "systems";
+    };
+
+    git-hooks = {
+      url = "github:cachix/git-hooks.nix";
+      inputs.flake-compat.follows = "flake-compat";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    gremlin-shell = {
+      url = "git+https://codeberg.org/bricked/gremlin-shell";
+      inputs.flake-parts.follows = "flake-parts";
+      inputs.git-hooks.follows = "git-hooks";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.rust-overlay.follows = "rust-overlay";
+      inputs.systems.follows = "systems";
+      inputs.treefmt-nix.follows = "treefmt-nix";
+    };
+
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v1.2.0";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.pre-commit.follows = "git-hooks";
+      inputs.rust-overlay.follows = "rust-overlay";
+    };
+
+    mangowm = {
+      url = "github:mangowm/mango";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-parts.follows = "flake-parts";
+
+      inputs.scenefx = {
+        inputs.flake-utils.follows = "flake-utils";
+        inputs.systems.follows = "systems";
+      };
+    };
+
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -174,28 +144,27 @@
       inputs.git-hooks.follows = "git-hooks";
     };
 
-    ditto-bot = {
-      url = "git+https://codeberg.org/ditto/bot";
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    spicetify-nix = {
+      url = "github:Gerg-L/spicetify-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.systems.follows = "systems";
+    };
+
+    stylix = {
+      url = "git+https://codeberg.org/bricked/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.systems.follows = "systems";
       inputs.flake-parts.follows = "flake-parts";
-      inputs.treefmt-nix.follows = "treefmt-nix";
-      inputs.git-hooks.follows = "git-hooks";
     };
 
-    gregg-bot = {
-      url = "git+https://codeberg.org/bricked/gregg-bot";
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.systems.follows = "systems";
-      inputs.flake-parts.follows = "flake-parts";
-      inputs.treefmt-nix.follows = "treefmt-nix";
-      inputs.git-hooks.follows = "git-hooks";
-    };
-
-    # Assets
-    wallpaper = {
-      url = "https://raw.githubusercontent.com/orangci/walls-catppuccin-mocha/40912e6418737e93b59a38bcf189270cbf26656d/pink-clouds.jpg";
-      flake = false;
     };
   };
 }

@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  inputs,
   ...
 }: let
   inherit (lib) mkIf;
@@ -12,7 +11,6 @@ in {
   config = mkIf cfg.enable {
     stylix = {
       base16Scheme = ./coal.yaml;
-      image = inputs.wallpaper;
       polarity = "dark";
 
       fonts = rec {

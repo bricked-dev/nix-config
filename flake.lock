@@ -169,38 +169,6 @@
         "type": "github"
       }
     },
-    "ditto-bot": {
-      "inputs": {
-        "flake-parts": [
-          "flake-parts"
-        ],
-        "git-hooks": [
-          "git-hooks"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "systems": [
-          "systems"
-        ],
-        "treefmt-nix": [
-          "treefmt-nix"
-        ]
-      },
-      "locked": {
-        "lastModified": 1773441287,
-        "narHash": "sha256-ZYvHJ7jqTX32KdT61HMA9URKKMmUPxAha37Fa0AR7b4=",
-        "ref": "refs/heads/main",
-        "rev": "8880554f9e81860d6ab7f3e9bdc07721ded0db0c",
-        "revCount": 2,
-        "type": "git",
-        "url": "https://codeberg.org/ditto/bot"
-      },
-      "original": {
-        "type": "git",
-        "url": "https://codeberg.org/ditto/bot"
-      }
-    },
     "firefox-addons": {
       "inputs": {
         "nixpkgs": [
@@ -422,38 +390,6 @@
         "ref": "50.1",
         "repo": "gnome-shell",
         "type": "gitlab"
-      }
-    },
-    "gregg-bot": {
-      "inputs": {
-        "flake-parts": [
-          "flake-parts"
-        ],
-        "git-hooks": [
-          "git-hooks"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "systems": [
-          "systems"
-        ],
-        "treefmt-nix": [
-          "treefmt-nix"
-        ]
-      },
-      "locked": {
-        "lastModified": 1774016964,
-        "narHash": "sha256-JxbMu2967mySRSZSDQzok9jLljDwU45Mc48lSLHdoKs=",
-        "ref": "refs/heads/main",
-        "rev": "df3565ea9c0b6ffbe42d0392c53cd353547544fe",
-        "revCount": 5,
-        "type": "git",
-        "url": "https://codeberg.org/bricked/gregg-bot"
-      },
-      "original": {
-        "type": "git",
-        "url": "https://codeberg.org/bricked/gregg-bot"
       }
     },
     "gremlin-shell": {
@@ -764,14 +700,12 @@
       "inputs": {
         "devshell": "devshell",
         "disko": "disko",
-        "ditto-bot": "ditto-bot",
         "firefox-addons": "firefox-addons",
         "firefox-extensions-declarative": "firefox-extensions-declarative",
         "flake-compat": "flake-compat",
         "flake-parts": "flake-parts",
         "flake-utils": "flake-utils",
         "git-hooks": "git-hooks",
-        "gregg-bot": "gregg-bot",
         "gremlin-shell": "gremlin-shell",
         "home-manager": "home-manager",
         "lanzaboote": "lanzaboote",
@@ -783,8 +717,7 @@
         "spicetify-nix": "spicetify-nix",
         "stylix": "stylix",
         "systems": "systems",
-        "treefmt-nix": "treefmt-nix",
-        "wallpaper": "wallpaper"
+        "treefmt-nix": "treefmt-nix"
       }
     },
     "rust-overlay": {
@@ -991,18 +924,6 @@
         "owner": "numtide",
         "repo": "treefmt-nix",
         "type": "github"
-      }
-    },
-    "wallpaper": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-DXOPEs8Beh+rHKbKQnNf+2Aj251qZBMbL5E9gSfHGSs=",
-        "type": "file",
-        "url": "https://raw.githubusercontent.com/orangci/walls-catppuccin-mocha/40912e6418737e93b59a38bcf189270cbf26656d/pink-clouds.jpg"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://raw.githubusercontent.com/orangci/walls-catppuccin-mocha/40912e6418737e93b59a38bcf189270cbf26656d/pink-clouds.jpg"
       }
     }
   },
