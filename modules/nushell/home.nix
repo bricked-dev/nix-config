@@ -69,7 +69,9 @@ in {
           gmc = "git merge --continue";
           gma = "git merge --abort";
           gp = "git push";
+          gpa = "git push --all";
           gpf = "git push --force";
+          gpfa = "git push --force --all";
           gpl = "git pull";
           gr = "git reset";
           grb = "git rebase";
@@ -78,6 +80,7 @@ in {
           grbi = "git rebase --interactive";
           grbir = "git rebase --interactive --root";
           grs = "git restore";
+          grsa = "git restore all";
           gs = "git switch";
           gsc = "git switch --create";
         };
