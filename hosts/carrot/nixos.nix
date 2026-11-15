@@ -61,14 +61,9 @@ in {
 
   # Printing
   services.avahi.enable = true;
-
-  services.printing = {
-    enable = true;
-    drivers = [pkgs.hplip];
-  };
+  services.printing.enable = true;
 
   # Input
-  boot.kernelModules = ["uinput"];
   hardware.opentabletdriver.enable = true;
   hardware.uinput.enable = true;
   services.xserver.xkb.layout = "de";
