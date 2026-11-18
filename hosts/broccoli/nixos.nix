@@ -1,5 +1,6 @@
 {
   inputs,
+  pkgs,
   self,
   ...
 }: {
@@ -21,4 +22,6 @@
 
   networking.hostName = "broccoli";
   services.xserver.xkb.layout = "us";
+
+  environment.systemPackages = [pkgs.geteduroam];
 }
