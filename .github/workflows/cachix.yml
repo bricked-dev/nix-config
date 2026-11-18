@@ -32,7 +32,7 @@ jobs:
           --no-nom
           --flake ".#devShells.x86_64-linux.default"
 
-  cache_carrot:
+  cache_nixos:
     runs-on: ubuntu-latest
     steps:
       - name: Clone repository
@@ -70,8 +70,8 @@ jobs:
         with:
           name: bricked
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
-      - name: Build Home Manager configuration for Bricked
+      - name: Build Home Manager configuration for Bricked on Carrot
         run: >
           nix run github:Mic92/nix-fast-build -- 
           --no-nom
-          --flake ".#legacyPackages.x86_64-linux.homeConfigurations.bricked.activationPackage"
+          --flake ".#legacyPackages.x86_64-linux.homeConfigurations.\"bricked@carrot\".activationPackage"
