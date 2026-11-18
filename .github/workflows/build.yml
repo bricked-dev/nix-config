@@ -1,4 +1,4 @@
-name: "Push to Cachix"
+name: "Build Flake outputs"
 
 on:
   push:
@@ -10,7 +10,7 @@ env:
     trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= bricked.cachix.org-1:SPpNjrCYzlfisekwWTN7dEUQs+OrirrM92h1ZoEnciY=
 
 jobs:
-  cache_dev_shell:
+  build_dev_shell:
     runs-on: ubuntu-latest
     steps:
       - name: Clone repository
@@ -31,7 +31,7 @@ jobs:
         env:
           CACHIX_AUTH_TOKEN: "${{ secrets.CACHIX_AUTH_TOKEN }}"
 
-  cache_nixos:
+  build_nixos:
     runs-on: ubuntu-latest
     steps:
       - name: Clone repository
@@ -52,7 +52,7 @@ jobs:
         env:
           CACHIX_AUTH_TOKEN: "${{ secrets.CACHIX_AUTH_TOKEN }}"
 
-  cache_home:
+  build_home:
     runs-on: ubuntu-latest
     steps:
       - name: Clone repository
