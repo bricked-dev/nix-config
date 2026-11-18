@@ -5,7 +5,7 @@
   self,
   ...
 }: let
-  inherit (lib.modules) mkIf;
+  inherit (lib.modules) mkDefault mkIf;
   inherit (lib.options) mkEnableOption;
 
   cfg = config.profiles.desktop;
@@ -27,7 +27,7 @@ in {
     # Boot
     boot = {
       plymouth.enable = true;
-      silent = true;
+      silent = mkDefault true;
     };
 
     # Input

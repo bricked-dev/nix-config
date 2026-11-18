@@ -1,11 +1,9 @@
 {
-  inputs,
   pkgs,
   self,
   ...
 }: {
   imports = [
-    self.diskoConfigurations.carrot
     self.nixosModules.console
     self.nixosModules.desktop
     self.nixosModules.stylix
@@ -19,18 +17,9 @@
   profiles.system.enable = true;
   stylix.enable = true;
 
-  # Image
-  image.modules.iso-installer.isoImage.squashfsCompression = "zstd -Xcompression-level 6";
-
   # System
   networking.hostName = "installer";
   services.xserver.xkb.layout = "us";
-
-  # Boot
-  boot = {
-    silent = false;
-    supportedFilesystems.zfs = false;
-  };
 
   # Login
   services.displayManager.autoLogin = {

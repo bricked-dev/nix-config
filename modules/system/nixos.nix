@@ -30,6 +30,16 @@ in {
     system.stateVersion = mkDefault "26.11";
     time.timeZone = mkDefault "Europe/Berlin";
 
+    # Image
+    image.modules.iso-installer = {
+      isoImage.squashfsCompression = "zstd -Xcompression-level 6";
+
+      boot = {
+        silent = false;
+        supportedFilesystems.zfs = false;
+      };
+    };
+
     # Nix
     nix = {
       gc.automatic = mkDefault true;
