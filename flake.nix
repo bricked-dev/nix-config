@@ -18,19 +18,13 @@
 
       systems = import inputs.systems;
 
-      recursiveSpecialArgs = specialArgs: fix (self: specialArgs // {specialArgs = self;});
-
-      specialLibArgs = recursiveSpecialArgs {inherit inputs lib self;};
-      importLib' = importLib specialLibArgs;
-
-      resolveModules = resolve ./modules;
-      specialModuleArgs = specialLibArgs;
-      importModule' = importModule specialModuleArgs;
-
-      resolveUsers = resolve ./users;
+      # Resolvers
       resolveHosts = resolve ./hosts;
+      resolveModules = resolve ./modules;
       resolvePackages = resolve ./packages;
+      resolveUsers = resolve ./users;
 
+      # Resolved modules
       homeUserModules = resolveUsers "home";
       homeHostModules = resolveHosts "home";
       nixosHostModules = resolveHosts "nixos";
@@ -38,6 +32,32 @@
       hardwareHostModules =
         resolveHosts "hardware"
         |> mapAttrs' (name: value: nameValuePair (name + "-hardware") value);
+
+      homeUserHostModules =
+        self.usersConfigurations
+        |> mapAttrs (
+          hostName: config:
+            config.users.users
+            |> mapAttrs (userName: _user: {
+              imports = [
+                (self.homeModules.${userName} or {})
+                (self.homeModules."${userName}@${hostName}" or {})
+                (self.homeModules.${hostName} or {})
+                {
+                  home.username = mkDefault userName;
+                }
+              ];
+            })
+        );
+
+      # Special args
+      recursiveSpecialArgs = specialArgs: fix (self: specialArgs // {specialArgs = self;});
+      specialLibArgs = recursiveSpecialArgs {inherit inputs lib self;};
+      specialModuleArgs = specialLibArgs;
+
+      # Importers
+      importLib' = importLib specialLibArgs;
+      importModule' = importModule specialModuleArgs;
     in {
       imports = [
         inputs.disko.flakeModules.disko
@@ -90,23 +110,6 @@
       }: let
         specialPackageArgs = recursiveSpecialArgs {};
         importPackage' = importPackage pkgs specialPackageArgs;
-
-        homeUserHostModules =
-          self.usersConfigurations
-          |> mapAttrs (
-            hostName: config:
-              config.users.users
-              |> mapAttrs (userName: _user: {
-                imports = [
-                  (self.homeModules.${userName} or {})
-                  (self.homeModules."${userName}@${hostName}" or {})
-                  (self.homeModules.${hostName} or {})
-                  {
-                    home.username = mkDefault userName;
-                  }
-                ];
-              })
-          );
 
         homeConfigurations =
           homeUserHostModules
