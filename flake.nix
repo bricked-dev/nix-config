@@ -2,24 +2,161 @@
   description = "NixOS configuration";
 
   outputs = inputs:
-    inputs.flake-parts.lib.mkFlake {inherit inputs;} ({self, ...}: let
+    inputs.flake-parts.lib.mkFlake {inherit inputs;} ({
+      lib,
+      self,
+      ...
+    }: let
+      inherit (builtins) attrNames concatLists listToAttrs mapAttrs;
+      inherit (inputs.home-manager.lib) homeManagerConfiguration;
+      inherit (lib) nixosSystem;
+      inherit (lib.fixedPoints) fix;
+      inherit (lib.attrsets) filterAttrs mapAttrs' mapAttrsToList nameValuePair unionOfDisjoint;
+      inherit (lib.modules) mkDefault;
+      inherit (self.lib.imports) importLib importModule importPackage;
+      inherit (self.lib.resolvers) resolve;
+
       systems = import inputs.systems;
+
+      recursiveSpecialArgs = specialArgs: fix (self: specialArgs // {specialArgs = self;});
+
+      specialLibArgs = recursiveSpecialArgs {inherit inputs lib self;};
+      importLib' = importLib specialLibArgs;
+
+      resolveModules = resolve ./modules;
+      specialModuleArgs = specialLibArgs;
+      importModule' = importModule specialModuleArgs;
+
+      resolveUsers = resolve ./users;
+      resolveHosts = resolve ./hosts;
+      resolvePackages = resolve ./packages;
+
+      homeUserModules = resolveUsers "home";
+      homeHostModules = resolveHosts "home";
+      nixosHostModules = resolveHosts "nixos";
+
+      hardwareHostModules =
+        resolveHosts "hardware"
+        |> mapAttrs' (name: value: nameValuePair (name + "-hardware") value);
     in {
       imports = [
-        ./modules/forest/part.nix
-        inputs.treefmt-nix.flakeModule
+        inputs.disko.flakeModules.disko
         inputs.git-hooks.flakeModule
+        inputs.home-manager.flakeModules.home-manager
+        inputs.treefmt-nix.flakeModule
       ];
 
       inherit systems;
 
-      forest = {
-        root = ./.;
-        args = {inherit inputs self;};
+      flake = {
+        lib = {
+          imports = import ./lib/imports/lib.nix specialLibArgs;
+          modules = importLib' ./lib/modules/lib.nix;
+          options = importLib' ./lib/options/lib.nix;
+          resolvers = importLib' ./lib/resolvers/lib.nix;
+          trivial = import ./lib/trivial/lib.nix specialLibArgs;
+        };
+
+        # Configurations
+        diskoConfigurations =
+          resolveHosts "disko"
+          |> mapAttrs (_name: importLib');
+
+        # Modules
+        commonModules =
+          resolveModules "common"
+          |> mapAttrs (_name: importModule' null);
+
+        homeModules =
+          unionOfDisjoint (resolveModules "home") homeUserModules
+          |> unionOfDisjoint homeHostModules
+          |> mapAttrs (_name: importModule' "homeManager");
+
+        nixosModules =
+          unionOfDisjoint (resolveModules "nixos") nixosHostModules
+          |> unionOfDisjoint hardwareHostModules
+          |> mapAttrs (_name: importModule' "nixos");
       };
 
-      perSystem = {config, ...}: {
+      perSystem = {
+        config,
+        pkgs,
+        system,
+        ...
+      }: let
+        specialPackageArgs = recursiveSpecialArgs {};
+        importPackage' = importPackage pkgs specialPackageArgs;
+
+        homeUserHostModules =
+          nixosPlainConfigurations
+          |> mapAttrs (
+            hostName: host:
+              filterAttrs (_userName: user: user.isNormalUser) host.config.users.users
+              |> mapAttrs (userName: _user: {
+                imports = [
+                  (self.homeModules.${userName} or {})
+                  (self.homeModules."${userName}@${hostName}" or {})
+                  (self.homeModules.${hostName} or {})
+                  {
+                    home.username = mkDefault userName;
+                  }
+                ];
+              })
+          );
+
+        homeConfigurations =
+          homeUserHostModules
+          |> mapAttrsToList (
+            hostName:
+              mapAttrsToList (userName: module:
+                nameValuePair
+                "${userName}@${hostName}"
+                (homeManagerConfiguration {
+                  inherit pkgs;
+                  modules = [module];
+                }))
+          )
+          |> concatLists
+          |> listToAttrs;
+
+        nixosPlainConfigurations =
+          nixosHostModules
+          |> mapAttrs (hostName: _path:
+            nixosSystem {
+              inherit system;
+              modules = [self.nixosModules.${hostName}];
+            });
+
+        nixosHomesConfigurations =
+          nixosHostModules
+          |> attrNames
+          |> map (hostName:
+            nameValuePair
+            "${hostName}-homes"
+            (nixosSystem {
+              inherit system;
+              modules = [
+                self.nixosModules.${hostName}
+                {home-manager.users = homeUserHostModules.${hostName};}
+              ];
+            }))
+          |> listToAttrs;
+      in {
+        legacyPackages = {
+          inherit homeConfigurations;
+          nixosConfigurations = unionOfDisjoint nixosHomesConfigurations nixosPlainConfigurations;
+        };
+
+        packages =
+          resolvePackages "package"
+          |> mapAttrs (_name: importPackage');
+
+        # Shell
         devShells.default = config.pre-commit.devShell;
+
+        pre-commit.settings = {
+          hooks.treefmt.enable = true;
+        };
 
         treefmt.config = {
           flakeCheck = false;
@@ -32,10 +169,6 @@
             rustfmt.enable = true;
             statix.enable = true;
           };
-        };
-
-        pre-commit.settings = {
-          hooks.treefmt.enable = true;
         };
       };
     });
@@ -131,33 +264,14 @@
       };
     };
 
-    nix-index-database = {
-      url = "github:nix-community/nix-index-database";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     nixos-hardware = {
       url = "github:NixOS/nixos-hardware";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixos-nspawn = {
-      url = "git+https://codeberg.org/bricked/nixos-nspawn";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-parts.follows = "flake-parts";
-      inputs.treefmt-nix.follows = "treefmt-nix";
-      inputs.git-hooks.follows = "git-hooks";
-    };
-
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    spicetify-nix = {
-      url = "github:Gerg-L/spicetify-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.systems.follows = "systems";
     };
 
     stylix = {

@@ -38,6 +38,7 @@ in {
 
           # NixOS
           nrs = "nixos-rebuild switch --sudo --flake .";
+          nrsh = "nixos-rebuild switch --sudo --flake .#(hostname)-homes";
           nrt = "nixos-rebuild test --sudo --flake .";
           nri = "nixos-rebuild build-image --image-variant iso-installer --flake .#installer";
 

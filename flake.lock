@@ -609,26 +609,6 @@
         "type": "github"
       }
     },
-    "nix-index-database": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1794132860,
-        "narHash": "sha256-iGNtQnUZsi+v6/4NbtYr+dsmASa6GkzXtUcTpE8F3mE=",
-        "owner": "nix-community",
-        "repo": "nix-index-database",
-        "rev": "af9249ca33bc2efaae5d071e4c67ddef19dcb681",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "nix-index-database",
-        "type": "github"
-      }
-    },
     "nixos-hardware": {
       "inputs": {
         "nixpkgs": [
@@ -647,35 +627,6 @@
         "owner": "NixOS",
         "repo": "nixos-hardware",
         "type": "github"
-      }
-    },
-    "nixos-nspawn": {
-      "inputs": {
-        "flake-parts": [
-          "flake-parts"
-        ],
-        "git-hooks": [
-          "git-hooks"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "treefmt-nix": [
-          "treefmt-nix"
-        ]
-      },
-      "locked": {
-        "lastModified": 1783562138,
-        "narHash": "sha256-0/14sN9XxKbhY+C/TcjIHZ0EpyWlfXpOeGde5uiFSd0=",
-        "ref": "refs/heads/main",
-        "rev": "4fe3aca9de156d4514e23aa66b7e987609b5c925",
-        "revCount": 68,
-        "type": "git",
-        "url": "https://codeberg.org/bricked/nixos-nspawn"
-      },
-      "original": {
-        "type": "git",
-        "url": "https://codeberg.org/bricked/nixos-nspawn"
       }
     },
     "nixpkgs": {
@@ -730,12 +681,9 @@
         "home-manager": "home-manager",
         "lanzaboote": "lanzaboote",
         "mangowm": "mangowm",
-        "nix-index-database": "nix-index-database",
         "nixos-hardware": "nixos-hardware",
-        "nixos-nspawn": "nixos-nspawn",
         "nixpkgs": "nixpkgs",
         "rust-overlay": "rust-overlay",
-        "spicetify-nix": "spicetify-nix",
         "stylix": "stylix",
         "systems": "systems",
         "treefmt-nix": "treefmt-nix"
@@ -785,29 +733,6 @@
       "original": {
         "owner": "wlrfx",
         "repo": "scenefx",
-        "type": "github"
-      }
-    },
-    "spicetify-nix": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "systems": [
-          "systems"
-        ]
-      },
-      "locked": {
-        "lastModified": 1793662659,
-        "narHash": "sha256-a+za5QCDlOe/PsuMlZiBcQ13cyiyOscK17BAJFu1/dE=",
-        "owner": "Gerg-L",
-        "repo": "spicetify-nix",
-        "rev": "13e6fed4eb99f809d390fb50f591bed6cb716dc0",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Gerg-L",
-        "repo": "spicetify-nix",
         "type": "github"
       }
     },

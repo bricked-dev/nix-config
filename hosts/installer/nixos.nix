@@ -1,26 +1,35 @@
 {
-  pkgs,
   inputs,
+  pkgs,
   self,
   ...
-}: let
-  inherit (pkgs.stdenv.hostPlatform) system;
-  diskoPkgs = inputs.disko.packages.${system};
-  selfPkgs = self.packages.${system};
-in {
-  imports = [self.nixosModules.all];
+}: {
+  imports = [
+    self.diskoConfigurations.carrot
+    self.nixosModules.console
+    self.nixosModules.desktop
+    self.nixosModules.stylix
+    self.nixosModules.system
+  ];
+
+  # Profiles
+  profiles.console.enable = true;
+  profiles.desktop.enable = true;
+  profiles.system.enable = true;
+  stylix.enable = true;
 
   # Image
   image.modules.iso-installer.isoImage.squashfsCompression = "zstd -Xcompression-level 6";
 
   # System
   networking.hostName = "installer";
-  environment.etc."nixos".source = self.outPath;
-  system.stateVersion = "26.11";
-  nix.settings.trusted-users = ["@wheel"];
+  services.xserver.xkb.layout = "us";
 
   # Users
-  users.users.nixos.description = "NixOS";
+  users.users.nixos = {
+    description = "NixOS";
+    isNormalUser = true;
+  };
 
   home-manager = {
     extraSpecialArgs = {inherit inputs self;};
@@ -31,19 +40,14 @@ in {
 
   # Boot
   boot = {
-    kernelPackages = pkgs.linuxPackages_latest;
-    plymouth.enable = true;
+    silent = false;
     supportedFilesystems.zfs = false;
   };
 
   # Login
-  services.displayManager = {
-    gdm.enable = true;
-
-    autoLogin = {
-      enable = true;
-      user = "nixos";
-    };
+  services.displayManager.autoLogin = {
+    enable = true;
+    user = "nixos";
   };
 
   system.activationScripts.configureAccountsService.text = let
@@ -59,18 +63,4 @@ in {
   in ''
     install -D "${text}" "/var/lib/AccountsService/users/nixos"
   '';
-
-  # Desktop
-  programs.mango.enable = true;
-  services.gremlin-shell.enable = true;
-  services.xserver.xkb.layout = "us";
-  stylix.enable = true;
-
-  # Shell
-  console.useXkbConfig = true;
-  programs.nushell.enable = true;
-  users.defaultUserShell = selfPkgs.nushell-login;
-
-  # Programs
-  environment.systemPackages = [diskoPkgs.disko pkgs.home-manager];
 }

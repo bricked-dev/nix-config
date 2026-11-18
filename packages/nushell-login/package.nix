@@ -2,7 +2,6 @@
   nushell,
   lib,
   writers,
-  ...
 }: let
   inherit (lib.meta) getExe;
 in

@@ -18,10 +18,7 @@ in {
   config = mkIf cfg.enable (mkMerge [
     {
       programs.mango.withUWSM = true;
-
-      services.pipewire.enable = true;
       services.playerctld.enable = true;
-
       environment.systemPackages = [pkgs.brightnessctl];
     }
 
@@ -30,6 +27,7 @@ in {
 
       programs.uwsm = {
         enable = true;
+
         waylandCompositors.mango = {
           prettyName = "Mango";
           comment = "Mango compositor managed by UWSM";

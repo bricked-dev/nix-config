@@ -12,7 +12,15 @@ in {
   imports = [inputs.lanzaboote.nixosModules.lanzaboote];
 
   config = mkIf cfg.enable {
-    boot.lanzaboote.pkiBundle = mkDefault "/var/lib/sbctl";
+    boot.lanzaboote = {
+      autoGenerateKeys.enable = true;
+      pkiBundle = mkDefault "/var/lib/sbctl";
+
+      autoEnrollKeys = {
+        enable = true;
+        includeFirmwareBuiltinKeys = true;
+      };
+    };
 
     environment.systemPackages = [pkgs.sbctl];
   };

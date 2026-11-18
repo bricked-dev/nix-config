@@ -3,6 +3,7 @@
   lib,
   inputs,
   pkgs,
+  self,
   ...
 }: let
   inherit (lib.modules) mkIf;
@@ -10,9 +11,10 @@
   cfg = config.stylix;
 in {
   imports = [
-    ./common.nix
     inputs.stylix.homeModules.stylix
+    self.commonModules.stylix
   ];
+
   config = mkIf cfg.enable {
     stylix = {
       icons = {

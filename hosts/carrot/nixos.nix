@@ -1,22 +1,20 @@
-{
-  pkgs,
-  inputs,
-  self,
-  ...
-}: let
-  inherit (pkgs.stdenv.hostPlatform) system;
-  diskoPkgs = inputs.disko.packages.${system};
-  selfPkgs = self.packages.${system};
-in {
+{self, ...}: {
   imports = [
-    self.nixosModules.all
-    ./hardware.nix
-    ./disko.nix
+    self.diskoConfigurations.carrot
+    self.nixosModules.carrot-hardware
+    self.nixosModules.console
+    self.nixosModules.desktop
+    self.nixosModules.stylix
+    self.nixosModules.system
   ];
 
-  # System
+  profiles.console.enable = true;
+  profiles.desktop.enable = true;
+  profiles.system.enable = true;
+  stylix.enable = true;
+
   networking.hostName = "carrot";
-  time.timeZone = "Europe/Berlin";
+  services.xserver.xkb.layout = "de";
 
   # Users
   users.users = {
@@ -38,74 +36,4 @@ in {
       extraGroups = ["networkmanager" "wheel"];
     };
   };
-
-  # Nix
-  environment.etc."nixos".source = self.outPath;
-  nixpkgs.config.allowUnfree = true;
-  system.stateVersion = "26.11";
-
-  nix = {
-    gc.automatic = true;
-    settings.trusted-users = ["@wheel"];
-  };
-
-  # Boot
-  boot = {
-    kernelPackages = pkgs.linuxPackages_latest;
-    lanzaboote.enable = true;
-    loader.efi.canTouchEfiVariables = true;
-    plymouth.enable = true;
-    silent = true;
-    zswap.enable = true;
-  };
-
-  # Printing
-  services.avahi.enable = true;
-  services.printing.enable = true;
-
-  # Input
-  hardware.opentabletdriver.enable = true;
-  hardware.uinput.enable = true;
-  services.xserver.xkb.layout = "de";
-
-  i18n.inputMethod = {
-    enable = true;
-    type = "ibus";
-  };
-
-  # Desktop
-  stylix.enable = true;
-  services.displayManager.gdm.enable = true;
-  services.gremlin-shell.enable = true;
-  programs.mango.enable = true;
-
-  # Shell
-  console.useXkbConfig = true;
-  programs.nushell.enable = true;
-  users.defaultUserShell = selfPkgs.nushell-login;
-
-  # Programs
-  programs.rust.enable = true;
-  programs.spicetify.enable = true;
-  programs.steam.enable = true;
-
-  environment.systemPackages = [
-    diskoPkgs.disko
-    pkgs.libadwaita.devdoc
-    pkgs.alejandra
-    pkgs.bacon
-    pkgs.bitwarden-desktop
-    pkgs.cargo-flamegraph
-    pkgs.fd
-    pkgs.fractal
-    pkgs.gcc
-    pkgs.home-manager
-    pkgs.krita
-    pkgs.nix-melt
-    pkgs.nurl
-    pkgs.ripgrep
-    pkgs.tuba
-    pkgs.typst
-    pkgs.vesktop
-  ];
 }

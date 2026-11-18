@@ -4,29 +4,30 @@
   lib,
   ...
 }: let
-  inherit (builtins) fromTOML readFile;
-  inherit (lib) mkIf mkMerge mkDefault mapAttrsRecursive;
-  inherit (lib.hm.nushell) mkNushellInline;
+  inherit (builtins) readFile;
+  inherit (lib.modules) mkIf mkMerge mkForce;
+  inherit (config.lib.nushell) mkNushellInline;
 
   cfg = config.programs.starship;
 
   loadPreset = name: fromTOML (readFile "${pkgs.starship}/share/starship/presets/${name}.toml");
-
   plainTextSymbols = loadPreset "plain-text-symbols";
 in {
   config = mkIf cfg.enable (mkMerge [
     {
-      programs.starship.settings = mapAttrsRecursive (_: mkDefault) plainTextSymbols;
-    }
-    {
-      programs.starship.settings = {
-        format = "$all$line_break$character";
-        status = {
-          disabled = false;
-          symbol = "failed ";
-        };
-        character.error_symbol = "[>](bold green)";
-      };
+      programs.starship.settings = mkMerge [
+        plainTextSymbols
+
+        {
+          character.error_symbol = mkForce "[>](bold green)";
+          format = mkForce "$all$line_break$character";
+
+          status = mkForce {
+            disabled = false;
+            symbol = "failed ";
+          };
+        }
+      ];
     }
     (mkIf cfg.enableNushellIntegration {
       programs.starship.settings.profiles.transient = "$character";

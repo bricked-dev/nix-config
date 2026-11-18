@@ -1,4 +1,6 @@
 {
+  boot.zswap.enable = true;
+
   disko.devices.disk.main = {
     type = "disk";
     device = "/dev/disk/by-id/nvme-eui.00a075014fd00613";
