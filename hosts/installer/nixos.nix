@@ -10,6 +10,7 @@
     self.nixosModules.desktop
     self.nixosModules.stylix
     self.nixosModules.system
+    self.usersConfigurations.installer
   ];
 
   # Profiles
@@ -24,19 +25,6 @@
   # System
   networking.hostName = "installer";
   services.xserver.xkb.layout = "us";
-
-  # Users
-  users.users.nixos = {
-    description = "NixOS";
-    isNormalUser = true;
-  };
-
-  home-manager = {
-    extraSpecialArgs = {inherit inputs self;};
-    useGlobalPkgs = true;
-    useUserPackages = true;
-    users.nixos = ./home.nix;
-  };
 
   # Boot
   boot = {

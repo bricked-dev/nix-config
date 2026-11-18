@@ -6,6 +6,7 @@
     self.nixosModules.desktop
     self.nixosModules.stylix
     self.nixosModules.system
+    self.usersConfigurations.carrot
   ];
 
   profiles.console.enable = true;
@@ -15,25 +16,4 @@
 
   networking.hostName = "carrot";
   services.xserver.xkb.layout = "de";
-
-  # Users
-  users.users = {
-    bricked = {
-      isNormalUser = true;
-      description = "Bricked";
-      extraGroups = ["networkmanager" "wheel"];
-    };
-
-    personal = {
-      isNormalUser = true;
-      description = "Personal";
-      extraGroups = ["networkmanager" "wheel"];
-    };
-
-    gaming = {
-      isNormalUser = true;
-      description = "Gaming";
-      extraGroups = ["networkmanager" "wheel"];
-    };
-  };
 }

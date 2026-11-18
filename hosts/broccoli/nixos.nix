@@ -11,6 +11,7 @@
     self.nixosModules.desktop
     self.nixosModules.stylix
     self.nixosModules.system
+    self.usersConfigurations.broccoli
   ];
 
   profiles.console.enable = true;
@@ -20,19 +21,4 @@
 
   networking.hostName = "broccoli";
   services.xserver.xkb.layout = "us";
-
-  # Users
-  users.users = {
-    bricked = {
-      isNormalUser = true;
-      description = "Bricked";
-      extraGroups = ["networkmanager" "wheel"];
-    };
-
-    personal = {
-      isNormalUser = true;
-      description = "Personal";
-      extraGroups = ["networkmanager" "wheel"];
-    };
-  };
 }

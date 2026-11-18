@@ -7,11 +7,11 @@
       self,
       ...
     }: let
-      inherit (builtins) attrNames concatLists listToAttrs mapAttrs;
+      inherit (builtins) attrNames concatLists intersectAttrs listToAttrs mapAttrs;
       inherit (inputs.home-manager.lib) homeManagerConfiguration;
       inherit (lib) nixosSystem;
       inherit (lib.fixedPoints) fix;
-      inherit (lib.attrsets) filterAttrs mapAttrs' mapAttrsToList nameValuePair unionOfDisjoint;
+      inherit (lib.attrsets) mapAttrs' mapAttrsToList nameValuePair unionOfDisjoint;
       inherit (lib.modules) mkDefault;
       inherit (self.lib.imports) importLib importModule importPackage;
       inherit (self.lib.resolvers) resolve;
@@ -62,6 +62,10 @@
           resolveHosts "disko"
           |> mapAttrs (_name: importLib');
 
+        usersConfigurations =
+          resolveHosts "users"
+          |> mapAttrs (_name: importLib');
+
         # Modules
         commonModules =
           resolveModules "common"
@@ -88,10 +92,10 @@
         importPackage' = importPackage pkgs specialPackageArgs;
 
         homeUserHostModules =
-          nixosPlainConfigurations
+          self.usersConfigurations
           |> mapAttrs (
-            hostName: host:
-              filterAttrs (_userName: user: user.isNormalUser) host.config.users.users
+            hostName: config:
+              config.users.users
               |> mapAttrs (userName: _user: {
                 imports = [
                   (self.homeModules.${userName} or {})
@@ -129,6 +133,7 @@
 
         nixosHomesConfigurations =
           nixosHostModules
+          |> intersectAttrs homeUserHostModules
           |> attrNames
           |> map (hostName:
             nameValuePair

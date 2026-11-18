@@ -1,0 +1,21 @@
+{
+  users.users = {
+    bricked = {
+      isNormalUser = true;
+      description = "Bricked";
+      extraGroups = ["networkmanager" "wheel"];
+    };
+
+    personal = {
+      isNormalUser = true;
+      description = "Personal";
+      extraGroups = ["networkmanager" "wheel"];
+    };
+
+    gaming = {
+      isNormalUser = true;
+      description = "Gaming";
+      extraGroups = ["networkmanager" "wheel"];
+    };
+  };
+}
