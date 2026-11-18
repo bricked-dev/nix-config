@@ -62,7 +62,7 @@ in {
         };
 
         # Borders
-        root_color = mkColor colors.base02;
+        root_color = mkColor colors.base00;
         border_color = mkColor colors.base01;
         focus_color = mkColor colors.base01;
         split_color = mkColor colors.base01;

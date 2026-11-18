@@ -285,5 +285,10 @@
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    wallpaper = {
+      url = "https://gitlab.gnome.org/GNOME/gnome-backgrounds/-/raw/600c5348d674a24f12c11902225f2a630fe4594f/backgrounds/blobs-d.svg";
+      flake = false;
+    };
   };
 }

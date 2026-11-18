@@ -686,7 +686,8 @@
         "rust-overlay": "rust-overlay",
         "stylix": "stylix",
         "systems": "systems",
-        "treefmt-nix": "treefmt-nix"
+        "treefmt-nix": "treefmt-nix",
+        "wallpaper": "wallpaper"
       }
     },
     "rust-overlay": {
@@ -870,6 +871,18 @@
         "owner": "numtide",
         "repo": "treefmt-nix",
         "type": "github"
+      }
+    },
+    "wallpaper": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-nHya4EQFc0aE53nQKM+OyTDFSKVBk6ghGEynOBYcfc4=",
+        "type": "file",
+        "url": "https://gitlab.gnome.org/GNOME/gnome-backgrounds/-/raw/600c5348d674a24f12c11902225f2a630fe4594f/backgrounds/blobs-d.svg"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://gitlab.gnome.org/GNOME/gnome-backgrounds/-/raw/600c5348d674a24f12c11902225f2a630fe4594f/backgrounds/blobs-d.svg"
       }
     }
   },

@@ -13,6 +13,7 @@ in {
   imports = [
     inputs.gremlin-shell.homeModules.gremlin-shell
     self.homeModules.anyrun
+    self.homeModules.awww
     self.homeModules.ghostty
     self.homeModules.librewolf
     self.homeModules.mango
@@ -24,6 +25,7 @@ in {
   };
 
   config = mkIf cfg.enable {
+    services.awww.enable = true;
     services.gremlin-shell.enable = true;
     wayland.windowManager.mango.enable = true;
 
