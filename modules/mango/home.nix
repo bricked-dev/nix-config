@@ -49,7 +49,7 @@ in {
     wayland.windowManager.mango = {
       settings = {
         # Monitors
-        monitor_rule = "model:U28E590,scale:1.5";
+        monitor_rule = ["model:U28E590,scale:1.5" "model:MND508ZB1-1,scale:1.75"];
 
         # Tags
         tag_rule = eachTag (tag: _: "id:${tag},layout_name:fair");
