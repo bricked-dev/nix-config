@@ -19,6 +19,8 @@ in {
     {
       programs.mango.withUWSM = true;
       services.playerctld.enable = true;
+      xdg.portal.wlr.enable = true;
+
       environment.systemPackages = [pkgs.brightnessctl];
     }
 
