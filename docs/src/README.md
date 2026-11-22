@@ -11,4 +11,5 @@ Welcome to my Nix configuration! It provides:
 
 ## Resources
 
+- [Repository](https://codeberg.org/bricked/nix-config)
 - [Documentation](https://nix-config.bricked.dev/)
