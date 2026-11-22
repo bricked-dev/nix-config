@@ -14,6 +14,6 @@ sudo systemd-cryptenroll --tpm2-device=auto --wipe-slot tpm2 /dev/<encrypted-par
 
 Now, set up TPM disk unlock again.
 
-## Further Readings
+## See also
 
-- [`systemd-cryptenroll(1)`](https://www.freedesktop.org/software/systemd/man/251/systemd-cryptenroll.html) man page
+- [Man pages: `systemd-cryptenroll(1)`](https://www.freedesktop.org/software/systemd/man/251/systemd-cryptenroll.html)

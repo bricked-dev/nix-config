@@ -3,9 +3,10 @@
 [Introduction](./README.md)
 
 - [Guides](<>)
-  - [Install NixOS](./guides/install-nixos.md)
-  - [Apply Configurations](./guides/apply-configurations.md)
-  - [Enable Secure Boot](./guides/enable-secure-boot.md)
+  - [Installing NixOS](./guides/installing-nixos.md)
+  - [Applying Configurations](./guides/applying-configurations.md)
+  - [Using the Binary Cache](./guides/using-the-binary-cache.md)
+  - [Enabling Secure Boot](./guides/enabling-secure-boot.md)
   - [TPM Disk Unlock](./guides/tpm-disk-unlock.md)
 - [Architecture](<>)
   - [File Structure](./architecture/file-structure.md)

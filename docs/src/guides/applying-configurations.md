@@ -1,6 +1,6 @@
-# Apply Configurations
+# Applying Configurations
 
-## NixOS Configurations
+## NixOS configurations
 
 Applying NixOS configurations on an existing NixOS system is straightforward.
 
@@ -8,7 +8,7 @@ Applying NixOS configurations on an existing NixOS system is straightforward.
 nixos-rebuild switch --sudo --flake .#<host>
 ```
 
-## Home Manager Configurations
+## Home Manager configurations
 
 Home Manager configurations are provided for each user listed in the host's `users.nix` module.
 
@@ -16,7 +16,7 @@ Home Manager configurations are provided for each user listed in the host's `use
 home-manager switch -b backup --flake .#<user>@<host>
 ```
 
-## NixOS and Home Manager Configurations For All Users
+## NixOS and Home Manager configurations for all users
 
 NixOS configurations with the `-homes` suffix apply both the NixOS configuration and Home Manager configurations for all users listed in the host's `users.nix` module.
 

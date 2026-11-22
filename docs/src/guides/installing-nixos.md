@@ -1,4 +1,4 @@
-# Install NixOS
+# Installing NixOS
 
 This Nix configuration provides its own installation image. Unlike the official NixOS installer, it bundles the Nix configuration and most of its packages.
 
@@ -34,3 +34,9 @@ sudo nixos-enter --command "passwd <user>"
 ```
 
 Finally, reboot into the newly installed NixOS system.
+
+## See also
+
+- [NixOS Manual: Installation](https://nixos.org/manual/nixos/stable/index.html#ch-installation)
+- [NixOS Wiki: Creating a NixOS live CD](https://wiki.nixos.org/wiki/Creating_a_NixOS_live_CD)
+- [NixOS Manual: Building a NixOS (Live) ISO](https://nixos.org/manual/nixos/stable/index.html#sec-building-image)
