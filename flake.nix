@@ -108,7 +108,7 @@
         system,
         ...
       }: let
-        specialPackageArgs = recursiveSpecialArgs {};
+        specialPackageArgs = specialLibArgs;
         importPackage' = importPackage pkgs specialPackageArgs;
 
         homeConfigurations =
