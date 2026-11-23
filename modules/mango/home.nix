@@ -48,6 +48,9 @@ in {
 
     wayland.windowManager.mango = {
       settings = {
+        # XWayland
+        xwayland_persistence = 0;
+
         # Monitors
         monitor_rule = ["model:U28E590,scale:1.5" "model:MND508ZB1-1,scale:1.75"];
 
