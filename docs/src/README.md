@@ -1,4 +1,4 @@
-# Bricked's Nix Config
+# Bricked's Nix Configuration
 
 Welcome to my Nix configuration! It provides:
 

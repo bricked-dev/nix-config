@@ -2,7 +2,19 @@
 
 This Flake provides a binary cache, courtesy of Cachix and GitHub Actions.
 
-The binary cache is already configyred for this Flake. To use it, simply accept adding it as substituter when running a Nix command.
+The binary cache is already configured for this Flake. To use it, simply accept adding it as substituter when running a Nix command.
+
+## URL
+
+```
+https://bricked.cachix.org
+```
+
+## Public key
+
+```
+bricked.cachix.org-1:SPpNjrCYzlfisekwWTN7dEUQs+OrirrM92h1ZoEnciY=
+```
 
 ## Flakes
 
