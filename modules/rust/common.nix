@@ -28,7 +28,10 @@ in {
       };
 
       defaultText = literalExpression ''
-        inputs.rust-overlay.packages.''${pkgs.stdenv.hostPlatform.system}.rust.override {
+        let
+          inherit (pkgs.stdenv.hostPlatform) system;
+          rustPkgs = inputs.rust-overlay.packages.''${system};
+        in rustPkgs.rust.override {
           extensions = ["rust-analyzer"];
         }
       '';

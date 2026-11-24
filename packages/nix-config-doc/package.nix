@@ -45,11 +45,31 @@
       let names = ls ${self.tree.lib} | each { get name | path basename }
 
       def "format entry" [] {
-        $"## `($in.attrPath)` {#($in.attrPath)}
+        let attrPath = $in.attrPath
+        let attrList = $attrPath | split row "."
+        let attrHead = $attrList | last;
+        let attrTail = $attrList | drop 1 | str join ".";
 
-      ($in.description | str replace --all "\n#" "\n###")
+        let description = $in.description
+        | str replace --all --regex --multiline '^(#)+\s*(.+)$' { |prefix, title|
+          let title_slug = $title | str lowercase | str kebab-case
+          let id = $"attribute-($title_slug)-($attrPath)"
+          $"##($prefix) ($title) {#($id)}"
+        }
 
-      ### Source {#($in.attrPath)-source}
+      $"## `($attrPath)` {#attribute-($attrPath)}
+
+      ($description)
+
+      ### Usage {#attribute-usage-($attrPath)}
+
+      ```nix
+      let
+        inherit \(inputs.nix-config.lib.($attrTail)) ($attrHead);
+      in # ...
+      ```
+
+      ### Source {#attribute-source-($attrPath)}
 
       [`lib/($in.source.file):($in.source.line)`]\(${repoRoot}/lib/($in.source.file)#L($in.source.line))"
       }
@@ -90,10 +110,34 @@
           ++ singleton "${package.meta.description or "No description"}."
           ++ optional (package ? meta.longDescription) package.meta.longDescription
           ++ optional (package ? meta.mainProgram) ''
-            ## Run it
+            ## Usage
+
+            ### Nix command
 
             ```sh
             nix run git+https://codeberg.org/bricked/nix-config#${name}
+            ```
+
+            ### NixOS
+
+            ```nix
+            { inputs, pkgs, ... }: let
+              inherit (pkgs.stdenv.hostPlatform) system;
+              nixConfigPkgs = inputs.nix-config.packages.''${system};
+            in {
+              environment.systemPackages = [ nixConfigPkgs.${name} ]
+            }
+            ```
+
+            ### Home Manager
+
+            ```nix
+            { inputs, pkgs, ... }: let
+              inherit (pkgs.stdenv.hostPlatform) system;
+              nixConfigPkgs = inputs.nix-config.packages.''${system};
+            in {
+              home.packages = [ nixConfigPkgs.${name} ]
+            }
             ```
           ''
           ++ singleton ''
@@ -133,19 +177,19 @@
       singleton "### `${attrText}` {#${class}-option-${attrText}}"
       ++ singleton option.description
       ++ singleton ''
-        ### Type {#${class}-option-${attrText}-type}
+        #### Type {#${class}-option-type-${attrText}}
 
         ${option.type.description}
       ''
       ++ optional (option ? defaultText || option ? default) ''
-        ### Default {#${class}-option-${attrText}-default}
+        #### Default {#${class}-option-default-${attrText}}
 
         ```nix
         ${defaultText}
         ```
       ''
       ++ optional (option ? example) ''
-        ### Example {#${class}-option-${attrText}-example}
+        #### Example {#${class}-option-example-${attrText}}
 
         ```nix
         ${exampleText}
@@ -178,7 +222,15 @@
 
     ${body}
 
-    ## Source {#${class}-source}
+    ### Usage {#${class}-usage}
+
+    ```nix
+    { inputs, ... }: {
+      imports = [inputs.nix-dots.${class}Modules.${name}];
+    }
+    ```
+
+    ### Source {#${class}-source}
 
     [`modules/${name}/${class}.nix`](${repoRoot}/modules/${name}/${class}.nix)
   '';
