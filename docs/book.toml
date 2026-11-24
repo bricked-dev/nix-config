@@ -1,4 +1,10 @@
 [book]
 title = "Bricked's Nix Configuration"
 authors = ["Bricked"]
+description = "Documentation for Bricked's Nix Configuration."
 language = "en"
+
+[output.html]
+git-repository-icon = "fas-code-fork"
+
+[output.markdown]

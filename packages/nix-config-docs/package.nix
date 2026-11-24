@@ -22,12 +22,22 @@
     if self ? rev
     then "commit/${self.rev}"
     else "branch/main";
+
   repoRoot = "https://codeberg.org/bricked/nix-config/src/${repoRef}";
 
-  generateLibDocs =
-    writeNu "nix-config-generate-lib-docs"
+  patchConfig =
     # nu
     ''
+      open ./book.toml
+      | insert output.html.git-repository-url "${repoRoot}"
+      | save --force ./book.toml
+    '';
+
+  patchLibDocs =
+    # nu
+    ''
+      mkdir ./src/lib
+
       let names = ls ${libSrc} | each { get name | path basename }
 
       def "format entry" [] {
@@ -67,11 +77,11 @@
       | save --force ./src/SUMMARY.md
     '';
 
-  generatePackagesDocs = let
+  patchPackagesDocs = let
     body =
       self.packages.x86_64-linux
       |> mapAttrsToList (name: package: let
-        content = writeText "nix-config-package-docs-${name}" ''
+        content = writeText "nix-config-docs-package-${name}" ''
           # `${package.pname or package.name}`
 
           ${package.meta.description or "No description"}${
@@ -94,14 +104,15 @@
       in
         # nu
         ''
+
           install ${content} ./src/packages/${name}.md
           let chapters = $chapters | append "  - [`${name}`](./packages/${name}.md)"
         '')
       |> join "\n";
   in
-    writeNu "nix-config-generate-package-docs"
     # nu
     ''
+      mkdir ./src/packages
       let chapters = [];
 
       ${body}
@@ -110,6 +121,12 @@
       | str replace " <!-- packages -->" $"\n($chapters | str join "\n")"
       | save --force ./src/SUMMARY.md
     '';
+
+  patchDocs = writeNu "nix-config-docs-patch" ''
+    ${patchConfig}
+    ${patchLibDocs}
+    ${patchPackagesDocs}
+  '';
 in
   stdenvNoCC.mkDerivation {
     inherit src;
@@ -118,17 +135,14 @@ in
     # Build
     buildInputs = [mdbook nixdoc];
 
-    patchPhase = ''
-      mkdir ./src/lib ./src/packages
-
-      ${generateLibDocs}
-      ${generatePackagesDocs}
-    '';
+    patchPhase = patchDocs;
 
     buildPhase = ''
       mdbook build
 
-      cp --recursive ./book $out
+      mkdir --parents $out/share/doc
+
+      cp --recursive ./book $out/share/doc/nix-config
     '';
 
     meta = {
