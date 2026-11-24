@@ -15,7 +15,7 @@
   inherit (lib.strings) join;
   inherit (writers) writeNu;
 
-  src = cleanSource ../../docs;
+  src = cleanSource ../../doc;
   libSrc = ../../lib;
 
   repoRef =
@@ -33,7 +33,7 @@
       | save --force ./book.toml
     '';
 
-  patchLibDocs =
+  patchLibDoc =
     # nu
     ''
       mkdir ./src/lib
@@ -77,11 +77,11 @@
       | save --force ./src/SUMMARY.md
     '';
 
-  patchPackagesDocs = let
+  patchPackagesDoc = let
     body =
       self.packages.x86_64-linux
       |> mapAttrsToList (name: package: let
-        content = writeText "nix-config-docs-package-${name}" ''
+        content = writeText "nix-config-doc-package-${name}" ''
           # `${package.pname or package.name}`
 
           ${package.meta.description or "No description"}${
@@ -122,20 +122,20 @@
       | save --force ./src/SUMMARY.md
     '';
 
-  patchDocs = writeNu "nix-config-docs-patch" ''
+  patchDoc = writeNu "nix-config-doc-patch" ''
     ${patchConfig}
-    ${patchLibDocs}
-    ${patchPackagesDocs}
+    ${patchLibDoc}
+    ${patchPackagesDoc}
   '';
 in
   stdenvNoCC.mkDerivation {
     inherit src;
-    name = "nix-config-docs";
+    name = "nix-config-doc";
 
     # Build
     buildInputs = [mdbook nixdoc];
 
-    patchPhase = patchDocs;
+    patchPhase = patchDoc;
 
     buildPhase = ''
       mdbook build

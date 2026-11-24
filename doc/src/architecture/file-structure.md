@@ -4,7 +4,7 @@
 /
 ├── flake.nix # Input and output definitions
 │
-├── docs
+├── doc
 │   └── src # Documentation
 │
 ├── lib

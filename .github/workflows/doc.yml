@@ -27,7 +27,7 @@ jobs:
         with:
           extra_nix_config: "${{ env.EXTRA_NIX_CONFIG }}"
       - name: Build documentation
-        run: nix build .#nix-config-docs
+        run: nix build .#nix-config-doc
       - name: Upload documentation
         uses: actions/upload-pages-artifact@v5
         with:
