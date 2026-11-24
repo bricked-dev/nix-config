@@ -21,15 +21,16 @@ jobs:
         uses: cachix/install-nix-action@v31
         with:
           extra_nix_config: "${{ env.EXTRA_NIX_CONFIG }}"
+      - name: Set up Cachix
+        uses: cachix/cachix-action@v15
+        with:
+          name: bricked
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
       - name: Build default dev shell
         run: >
           nix run github:Mic92/nix-fast-build --
-          --cachix-cache bricked
-          --skip-cached
           --no-nom
           --flake ".#devShells.x86_64-linux.default"
-        env:
-          CACHIX_AUTH_TOKEN: "${{ secrets.CACHIX_AUTH_TOKEN }}"
 
   build_nixos:
     runs-on: ubuntu-latest
@@ -42,15 +43,16 @@ jobs:
         uses: cachix/install-nix-action@v31
         with:
           extra_nix_config: "${{ env.EXTRA_NIX_CONFIG }}"
+      - name: Set up Cachix
+        uses: cachix/cachix-action@v15
+        with:
+          name: bricked
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
       - name: Build NixOS configuration for Carrot
         run: >
           nix run github:Mic92/nix-fast-build --
-          --cachix-cache bricked
-          --skip-cached
           --no-nom
           --flake ".#legacyPackages.x86_64-linux.nixosConfigurations.carrot.config.system.build.toplevel"
-        env:
-          CACHIX_AUTH_TOKEN: "${{ secrets.CACHIX_AUTH_TOKEN }}"
 
   build_home:
     runs-on: ubuntu-latest
@@ -63,12 +65,13 @@ jobs:
         uses: cachix/install-nix-action@v31
         with:
           extra_nix_config: "${{ env.EXTRA_NIX_CONFIG }}"
+      - name: Set up Cachix
+        uses: cachix/cachix-action@v15
+        with:
+          name: bricked
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
       - name: Build Home Manager configuration for Bricked on Carrot
         run: >
           nix run github:Mic92/nix-fast-build -- 
-          --cachix-cache bricked
-          --skip-cached
           --no-nom
           --flake ".#legacyPackages.x86_64-linux.homeConfigurations.\"bricked@carrot\".activationPackage"
-        env:
-          CACHIX_AUTH_TOKEN: "${{ secrets.CACHIX_AUTH_TOKEN }}"
