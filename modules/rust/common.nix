@@ -5,7 +5,10 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkEnableOption mkIf mkOption replaceString types;
+  inherit (builtins) replaceString;
+  inherit (lib) types;
+  inherit (lib.modules) mkIf;
+  inherit (lib.options) literalExpression mkEnableOption mkOption;
   inherit (pkgs.stdenv.hostPlatform) system;
 
   rustPkgs = inputs.rust-overlay.packages.${system};
@@ -23,6 +26,12 @@ in {
       default = rustPkgs.rust.override {
         extensions = ["rust-analyzer"];
       };
+
+      defaultText = literalExpression ''
+        inputs.rust-overlay.packages.''${pkgs.stdenv.hostPlatform.system}.rust.override {
+          extensions = ["rust-analyzer"];
+        }
+      '';
     };
 
     docs = {

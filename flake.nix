@@ -25,10 +25,6 @@
       resolveUsers = resolve ./users;
 
       # Resolved modules
-      homeUserModules = resolveUsers "home";
-      homeHostModules = resolveHosts "home";
-      nixosHostModules = resolveHosts "nixos";
-
       hardwareHostModules =
         resolveHosts "hardware"
         |> mapAttrs' (name: value: nameValuePair (name + "-hardware") value);
@@ -77,6 +73,22 @@
           trivial = import ./lib/trivial/lib.nix specialLibArgs;
         };
 
+        tree = {
+          root = ./.;
+          flake = ./flake.nix;
+
+          doc = ./doc;
+          lib = ./lib;
+
+          homeModules = resolveModules "home";
+          nixosModules = resolveModules "nixos";
+          commonModules = resolveModules "common";
+
+          homeUserModules = resolveUsers "home";
+          homeHostModules = resolveHosts "home";
+          nixosHostModules = resolveHosts "nixos";
+        };
+
         # Configurations
         diskoConfigurations =
           resolveHosts "disko"
@@ -92,12 +104,12 @@
           |> mapAttrs (_name: importModule' null);
 
         homeModules =
-          unionOfDisjoint (resolveModules "home") homeUserModules
-          |> unionOfDisjoint homeHostModules
+          unionOfDisjoint self.tree.homeModules self.tree.homeUserModules
+          |> unionOfDisjoint self.tree.homeHostModules
           |> mapAttrs (_name: importModule' "homeManager");
 
         nixosModules =
-          unionOfDisjoint (resolveModules "nixos") nixosHostModules
+          unionOfDisjoint self.tree.nixosModules self.tree.nixosHostModules
           |> unionOfDisjoint hardwareHostModules
           |> mapAttrs (_name: importModule' "nixos");
       };
@@ -108,7 +120,7 @@
         system,
         ...
       }: let
-        specialPackageArgs = specialLibArgs;
+        specialPackageArgs = recursiveSpecialArgs (specialLibArgs // {inherit pkgs;});
         importPackage' = importPackage pkgs specialPackageArgs;
 
         homeConfigurations =
@@ -127,7 +139,7 @@
           |> listToAttrs;
 
         nixosPlainConfigurations =
-          nixosHostModules
+          self.tree.nixosHostModules
           |> mapAttrs (hostName: _path:
             nixosSystem {
               inherit system;
@@ -135,7 +147,7 @@
             });
 
         nixosHomesConfigurations =
-          nixosHostModules
+          self.tree.nixosHostModules
           |> intersectAttrs homeUserHostModules
           |> attrNames
           |> map (hostName:
