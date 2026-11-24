@@ -2,31 +2,33 @@
   lib,
   self,
   stdenvNoCC,
+  writeText,
   writers,
   # Build inputs
   mdbook,
   nixdoc,
 }: let
+  inherit (lib) maintainers;
+  inherit (lib.attrsets) mapAttrsToList;
   inherit (lib.meta) getExe;
   inherit (lib.sources) cleanSource;
+  inherit (lib.strings) join;
   inherit (writers) writeNu;
 
   src = cleanSource ../../docs;
   libSrc = ../../lib;
 
-  rev = self.rev or null;
-  repoRoot = "https://codeberg.org/bricked/nix-config/src/${
-    if rev != null
-    then "commit/${rev}"
-    else "branch/main"
-  }";
+  repoRef =
+    if self ? rev
+    then "commit/${self.rev}"
+    else "branch/main";
+  repoRoot = "https://codeberg.org/bricked/nix-config/src/${repoRef}";
 
   generateLibDocs =
     writeNu "nix-config-generate-lib-docs"
     # nu
     ''
       let names = ls ${libSrc} | each { get name | path basename }
-      mkdir ./src/lib
 
       def "format entry" [] {
         $"## `($in.attrPath)` {#($in.attrPath)}
@@ -61,7 +63,51 @@
       | str join "\n"
 
       open --raw ./src/SUMMARY.md
-      | str replace " <!-- lib-chapters -->" $"\n($chapters)"
+      | str replace " <!-- library -->" $"\n($chapters)"
+      | save --force ./src/SUMMARY.md
+    '';
+
+  generatePackagesDocs = let
+    body =
+      self.packages.x86_64-linux
+      |> mapAttrsToList (name: package: let
+        content = writeText "nix-config-package-docs-${name}" ''
+          # `${package.pname or package.name}`
+
+          ${package.meta.description or "No description"}${
+            if package ? meta.mainProgram
+            then ''
+
+              ## Try it
+
+              ```sh
+              nix run git+https://codeberg.org/bricked/nix-config#${name}
+              ```
+            ''
+            else ""
+          }
+
+          ## Source
+
+          [`packages/${name}/package.nix`](${repoRoot}/packages/${name}/package.nix)
+        '';
+      in
+        # nu
+        ''
+          install ${content} ./src/packages/${name}.md
+          let chapters = $chapters | append "  - [`${name}`](./packages/${name}.md)"
+        '')
+      |> join "\n";
+  in
+    writeNu "nix-config-generate-package-docs"
+    # nu
+    ''
+      let chapters = [];
+
+      ${body}
+
+      open --raw ./src/SUMMARY.md
+      | str replace " <!-- packages -->" $"\n($chapters | str join "\n")"
       | save --force ./src/SUMMARY.md
     '';
 in
@@ -73,7 +119,10 @@ in
     buildInputs = [mdbook nixdoc];
 
     patchPhase = ''
+      mkdir ./src/lib ./src/packages
+
       ${generateLibDocs}
+      ${generatePackagesDocs}
     '';
 
     buildPhase = ''
@@ -81,4 +130,9 @@ in
 
       cp --recursive ./book $out
     '';
+
+    meta = {
+      description = "Documentation for Bricked's Nix Configuration";
+      maintainers = [maintainers.bricked];
+    };
   }

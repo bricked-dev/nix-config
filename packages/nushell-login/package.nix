@@ -3,6 +3,7 @@
   lib,
   writers,
 }: let
+  inherit (lib) maintainers;
   inherit (lib.meta) getExe;
 in
   (writers.writeDashBin "nushell-login"
@@ -13,4 +14,10 @@ in
       fi
     '').overrideAttrs {
     passthru.shellPath = "/bin/nushell-login";
+
+    meta = {
+      description = "Login shell wrapper for Nushell";
+      mainProgram = "nushell-login";
+      maintainers = [maintainers.bricked];
+    };
   }
