@@ -17,7 +17,7 @@
   inherit (lib.meta) getExe;
   inherit (lib.options) isOption renderOptionValue showOption;
   inherit (lib.sources) cleanSource;
-  inherit (lib.strings) escape join;
+  inherit (lib.strings) join;
   inherit (writers) writeNu;
 
   src = cleanSource self.tree.doc;
@@ -62,8 +62,8 @@
       ### Usage {#attribute-usage-($attrPath)}
 
       ```nix
-      let
-        inherit \(inputs.nix-config.lib.($attrTail)) ($attrHead);
+      {inputs, ...}: let
+        inherit \(inputs.nix-config.($attrTail)) ($attrHead);
       in # ...
       ```
 
@@ -126,22 +126,22 @@
             ### NixOS
 
             ```nix
-            { inputs, pkgs, ... }: let
+            {inputs, pkgs, ...}: let
               inherit (pkgs.stdenv.hostPlatform) system;
               nixConfigPkgs = inputs.nix-config.packages.''${system};
             in {
-              environment.systemPackages = [ nixConfigPkgs.${name} ]
+              environment.systemPackages = [nixConfigPkgs.${name}];
             }
             ```
 
             ### Home Manager
 
             ```nix
-            { inputs, pkgs, ... }: let
+            {inputs, pkgs, ...}: let
               inherit (pkgs.stdenv.hostPlatform) system;
               nixConfigPkgs = inputs.nix-config.packages.''${system};
             in {
-              home.packages = [ nixConfigPkgs.${name} ]
+              home.packages = [nixConfigPkgs.${name}];
             }
             ```
           ''
@@ -248,7 +248,7 @@
     ### Usage {#${class}-usage}
 
     ```nix
-    { inputs, ... }: {
+    {inputs, ...}: {
       imports = [inputs.nix-dots.${class}Modules.${name}];
     }
     ```
