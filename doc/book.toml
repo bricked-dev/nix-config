@@ -7,4 +7,7 @@ language = "en"
 [output.html]
 git-repository-icon = "fas-code-fork"
 
+[output.html.fold]
+enable = true
+
 [output.markdown]

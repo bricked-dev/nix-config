@@ -17,7 +17,7 @@
   inherit (lib.meta) getExe;
   inherit (lib.options) isOption renderOptionValue showOption;
   inherit (lib.sources) cleanSource;
-  inherit (lib.strings) join;
+  inherit (lib.strings) escape join;
   inherit (writers) writeNu;
 
   src = cleanSource self.tree.doc;
@@ -40,8 +40,6 @@
   patchLibDoc =
     # nu
     ''
-      mkdir ./src/lib
-
       let names = ls ${self.tree.lib} | each { get name | path basename }
 
       def "format entry" [] {
@@ -92,13 +90,21 @@
         rm ./($name).manifest.json
       }
 
-      let chapters = $names
-      | each { |name| $"  - [`lib.($name)`]\(./lib/($name).md)"}
+      let summary = $names
+      | each { $"  - [`($in)`]\(./lib/($in).md)" }
+      | str join "\n"
+
+      let list = $names
+      | each { $"- [`($in)`]\(./($in).md)" }
       | str join "\n"
 
       open --raw ./src/SUMMARY.md
-      | str replace " <!-- library -->" $"\n($chapters)"
+      | str replace " <!-- lib-summary -->" $"\n($summary)"
       | save --force ./src/SUMMARY.md
+
+      open --raw ./src/lib/README.md
+      | str replace "<!-- lib-list -->" $list
+      | save --force ./src/lib/README.md
     '';
 
   patchPackagesDoc = let
@@ -107,8 +113,7 @@
       |> mapAttrsToList (name: package: let
         sections =
           singleton "# `${package.pname or package.name}`"
-          ++ singleton "${package.meta.description or "No description"}."
-          ++ optional (package ? meta.longDescription) package.meta.longDescription
+          ++ singleton "${package.meta.longDescription or package.meta.description or "No description"}."
           ++ optional (package ? meta.mainProgram) ''
             ## Usage
 
@@ -147,24 +152,42 @@
           '';
 
         content = concatStringsSep "\n\n" sections |> writeText "nix-config-doc-package-${name}";
+        nuDescription =
+          if package ? meta.description
+          then "\"${package.meta.description}\""
+          else "null";
       in
         # nu
         ''
           cp ${content} ./src/packages/${name}.md
-          let chapters = $chapters | append "  - [`${name}`](./packages/${name}.md)"
+          let chapters = $chapters | append { name: "${name}", description: ${nuDescription} }
         '')
       |> join "\n";
   in
     # nu
     ''
-      mkdir ./src/packages
       let chapters = [];
 
       ${body}
 
+      let summary = $chapters
+      | each { $"  - [`($in.name)`]\(./packages/($in.name).md)" }
+      | str join "\n"
+
+      let list = $chapters
+      | each {
+        let description = if $in.description != null {$": ($in.description)"} else {""}
+        $"- [`($in.name)`]\(./($in.name).md)($description)"
+      }
+      | str join "\n"
+
       open --raw ./src/SUMMARY.md
-      | str replace " <!-- packages -->" $"\n($chapters | str join "\n")"
+      | str replace " <!-- packages-summary -->" $"\n($summary)"
       | save --force ./src/SUMMARY.md
+
+      open --raw ./src/packages/README.md
+      | str replace "<!-- packages-list -->" $list
+      | save --force ./src/packages/README.md
     '';
 
   renderOptions = class: attr: option: let
@@ -257,21 +280,32 @@
           # nu
           ''
             cp ${content} ./src/modules/${name}.md
-            let chapters = $chapters | append "  - [`${name}`](./modules/${name}.md)"
+            let chapters = $chapters | append { name: "${name}" }
           ''
       )
       |> concatStringsSep "\n";
   in
     # nu
     ''
-      mkdir ./src/modules
       let chapters = [];
 
       ${body}
 
+      let summary = $chapters
+      | each { $"  - [`($in.name)`]\(./modules/($in.name).md)" }
+      | str join "\n"
+
+      let list = $chapters
+      | each { $"- [`($in.name)`]\(./($in.name).md)" }
+      | str join "\n"
+
       open --raw ./src/SUMMARY.md
-      | str replace " <!-- modules -->" $"\n($chapters | str join "\n")"
+      | str replace " <!-- modules-summary -->" $"\n($summary)"
       | save --force ./src/SUMMARY.md
+
+      open --raw ./src/modules/README.md
+      | str replace "<!-- modules-list -->" $list
+      | save --force ./src/modules/README.md
     '';
 
   patchDoc = writeNu "nix-config-doc-patch" ''
