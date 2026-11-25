@@ -13,3 +13,7 @@ Welcome to my Nix configuration! It provides:
 
 - [Repository](https://codeberg.org/bricked/nix-config)
 - [Documentation](https://nix-config.bricked.dev/)
+
+## Showcase
+
+![Screenshot of a desktop using the Nix Configuration](./assets/desktop.webp)
